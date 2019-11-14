@@ -5,17 +5,17 @@ import java.util.List;
 public class GameConfiguration {
     //TODO DefaultConfiguration
     enum PenaltyType{NOTHING, KICK, POINTLOSS};
-    public int MAXPLAYERCOUNT;
-    public int FIELDHEIGHT;
-    public int FIELDWIDTH;
-    public int SHOTCOUNT;
-    public float HITPOINTS;
-    public float SUNKPOINTS;
-    public long ROUNDTIMER;
-    public long VISUALIZATIONTIME;
-    public List<ShipType> SHIPTYPES;
-    public float PENALTYMINUSPOINTS;
-    public PenaltyType PENALTYTYPE;
+    public final int MAXPLAYERCOUNT;
+    public final int FIELDHEIGHT;
+    public final int FIELDWIDTH;
+    public final int SHOTCOUNT;
+    public final float HITPOINTS;
+    public final float SUNKPOINTS;
+    public final long ROUNDTIMER;
+    public final long VISUALIZATIONTIME;
+    public final List<ShipType> SHIPTYPES;
+    public final float PENALTYMINUSPOINTS;
+    public final PenaltyType PENALTYTYPE;
 
     public GameConfiguration(int MAXPLAYERCOUNT, int FIELDHEIGHT, int FIELDWIDTH, int SHOTCOUNT, float HITPOINTS, float SUNKPOINTS, long ROUNDTIMER, long VISUALIZATIONTIME, List<de.upb.codingpirates.battleships.logic.ShipType> SHIPTYPES, float PENALTYMINUSPOINTS, PenaltyType PENALTYTYPE) {
         this.MAXPLAYERCOUNT = MAXPLAYERCOUNT;
