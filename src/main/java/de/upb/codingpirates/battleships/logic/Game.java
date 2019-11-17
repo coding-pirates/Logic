@@ -1,6 +1,5 @@
 package de.upb.codingpirates.battleships.logic;
 
-import javafx.util.Pair;
 import java.util.List;
 
 public class Game {
