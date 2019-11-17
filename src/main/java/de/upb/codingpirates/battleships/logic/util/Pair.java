@@ -5,23 +5,23 @@ import javax.annotation.Nullable;
 public class Pair<T, Z> {
 
     private @Nullable
-    T first;
+    T key;
     private @Nullable
-    Z second;
+    Z value;
 
-    public Pair(@Nullable T first, @Nullable Z second) {
-        this.first = first;
-        this.second = second;
+    public Pair(@Nullable T key, @Nullable Z value) {
+        this.key = key;
+        this.value = value;
     }
 
     public @Nullable
-    T getFirst() {
-        return first;
+    T getKey() {
+        return key;
     }
 
     public @Nullable
-    Z getSecond() {
-        return second;
+    Z getValue() {
+        return value;
     }
 
     public static <T, Z> Pair<T, Z> of(@Nullable T first, @Nullable Z second) {
