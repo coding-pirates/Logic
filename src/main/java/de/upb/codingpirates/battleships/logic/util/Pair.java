@@ -7,8 +7,8 @@ public class Pair<T, Z> {
     private Z value;
 
     public Pair( T first,  Z second) {
-        this.first = first;
-        this.second = second;
+        this.key = first;
+        this.value = second;
     }
 
     public T getKey() {
