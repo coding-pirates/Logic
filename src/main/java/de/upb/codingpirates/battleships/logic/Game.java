@@ -1,7 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
 import java.util.List;
-import util.Pair;
+import logic.util.Pair;
 
 public class Game {
 
