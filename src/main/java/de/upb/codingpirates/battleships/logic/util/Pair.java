@@ -1,30 +1,25 @@
 package de.upb.codingpirates.battleships.logic.util;
 
-import javax.annotation.Nullable;
 
 public class Pair<T, Z> {
 
-    private @Nullable
-    T first;
-    private @Nullable
-    Z second;
+    private T key;
+    private Z value;
 
-    public Pair(@Nullable T first, @Nullable Z second) {
+    public Pair( T first,  Z second) {
         this.first = first;
         this.second = second;
     }
 
-    public @Nullable
-    T getFirst() {
-        return first;
+    public T getKey() {
+        return key;
     }
 
-    public @Nullable
-    Z getSecond() {
-        return second;
+    public Z gtValue() {
+        return value;
     }
 
-    public static <T, Z> Pair<T, Z> of(@Nullable T first, @Nullable Z second) {
+    public static <T, Z> Pair<T, Z> of( T first,  Z second) {
         return new Pair<>(first, second);
     }
 }
