@@ -30,4 +30,5 @@ public class GameConfiguration {
         this.PENALTYMINUSPOINTS = PENALTYMINUSPOINTS;
         this.PENALTYTYPE = PENALTYTYPE;
     }
+
 }
