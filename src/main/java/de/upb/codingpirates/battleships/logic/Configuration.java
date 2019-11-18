@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Configuration {
     //TODO DefaultConfiguration
-    enum PenaltyType{NOTHING, KICK, POINTLOSS};
+    enum PenaltyType{NOTHING, KICK, POINTLOSS}
     public final int MAXPLAYERCOUNT;
     public final int FIELDHEIGHT;
     public final int FIELDWIDTH;

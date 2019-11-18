@@ -14,10 +14,10 @@ public class Field {
     private HashBasedTable<Integer, Integer, Point2D> field = HashBasedTable.create();
 
     public Field(int height, int width, Player player){
-        this.id = correspondingPlayer.getId();
         this.height = height;
         this.width = width;
         this.correspondingPlayer = player;
+        this.id = correspondingPlayer.getId();
     }
     public void fillField(int x, int y, Point2D point){
         field.put(x,y,point);
@@ -28,20 +28,21 @@ public class Field {
         if (rotation == 0)//0Grad gedreht
         {
             for (Iterator it = p.iterator(); it.hasNext(); ){
-
+                    ;
             }
         }
-        else if (rotation ==1) //90Grad nach rechts gedreht
+        else //noinspection StatementWithEmptyBody
+            if (rotation ==1) //90Grad nach rechts gedreht
         {
-
+            ;
         }
         else if(rotation == 2) //180Grad nach rechts gedreht
         {
-
+            ;
         }
         else //90grad nach links
             {
-
+                ;
         }
     return true;
     }
