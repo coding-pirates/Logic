@@ -24,7 +24,7 @@ public class Field {
     }
 
     public boolean placeShip(Ship ship, Point2D position, int rotation){
-        Collection<Point2D> p = ship.getPositions;
+        Collection<Point2D> p = ship.getPositions();
         if (rotation == 0)//0Grad gedreht
         {
             for (Iterator it = p.iterator(); it.hasNext(); ){
@@ -50,7 +50,7 @@ public class Field {
     public boolean hitField(Point2D point){
         if (field.contains(point.getX(), point.getY())){
             Point2D position = field.get(point.getX(), point.getY());
-            if (position != null && position.isHit == false){
+            if (position != null && point.isHit() == false){
                 return true;
             }
             else{
