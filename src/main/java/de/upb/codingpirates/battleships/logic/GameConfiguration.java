@@ -2,7 +2,7 @@ package de.upb.codingpirates.battleships.logic;
 
 import java.util.List;
 
-public class GameConfiguration {
+public class Configuration {
     //TODO DefaultConfiguration
     enum PenaltyType{NOTHING, KICK, POINTLOSS};
     public final int MAXPLAYERCOUNT;
