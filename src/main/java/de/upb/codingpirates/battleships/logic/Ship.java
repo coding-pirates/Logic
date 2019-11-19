@@ -5,19 +5,19 @@ import java.util.Collection;
 public class Ship {
 
     private ShipType shipType;
-    private Collection<Position> leftShipParts;
+    private Collection<Point2D> leftShipParts;
 
-    public Ship(Collection<Position> shipPositions)
+    public Ship(Collection<Point2D> shipPositions)
     {
 
     }
 
-    public Collection<Position> getPositions()
+    public Collection<Point2D> getPositions()
     {
         return null;
     }
 
-    public void hitShip(Position position)
+    public void hitShip(Point2D position)
     {
 
     }

@@ -3,10 +3,25 @@ package de.upb.codingpirates.battleships.logic;
 public class Point2D {
     private int X;
     private int Y;
+    private boolean isHit;
+    private Ship ship;
 
     public Point2D(int x, int y) {
         X = x;
         Y = y;
+        isHit=false;
+    }
+
+    public Ship getShip() {
+        return ship;
+    }
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+
+    public void setIshit(boolean ishit) {
+        this.isHit = ishit;
     }
 
     public int getX() {
@@ -46,5 +61,11 @@ public class Point2D {
     }
 
 
+    public boolean isHit() {
+        return isHit;
+    }
 
+    public void hit(){
+        ship.hitShip(this);
+    }
 }
