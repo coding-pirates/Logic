@@ -7,16 +7,17 @@ public class Game {
 
     private int id;
     private String name;
-    private int playerCount;
-    private GameState gameState;
-    private GameConfiguration config;
+    private int currentPlayerCount;
+    private GameState state;
+    private Configuration config;
     private List<Player> players;
     private List<Field> fields;
     private long timeLeft;
     private int round;
+    private boolean tournament;
 
 
-    public Game(GameConfiguration config) // unsicher ob Datentyp Gameconfiguration or Configuration
+    public Game(Configuration config) // unsicher ob Datentyp Gameconfiguration or Configuration
     {
 
         this.config = config;
@@ -95,10 +96,6 @@ public class Game {
     public List<Player> getPlayers() { //getter Players from game
         return players;
     }
-    
-    public void addPlayer(Player newPlayer){ //add Players to list
-        players.add(newPlayer);
-    }
 
     public int getRound() { //getter Roundnumber
         return round;
@@ -112,7 +109,7 @@ public class Game {
         return state;
     }
     
-    public void setState(Gamestate newState){ //setter State
+    public void setState(GameState newState){ //setter State
         this.state = newState;
     }
     
