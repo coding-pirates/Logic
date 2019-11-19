@@ -59,5 +59,57 @@ public class Game {
         return null;
 
     }
+    
+      public int getId() { //getter ID
+        return id;
+    }
+
+    public String getName() {//getter Name
+        return name;
+    }
+
+    public void setName(String name) {//setter Name
+        this.name = name;
+    }
+
+    public int getCurrentPlayerCount() {//getter Playercount
+        return currentPlayerCount;
+    }
+
+    public void setCurrentPlayerCount(int currentPlayerCount) { //setter Playercount
+        this.currentPlayerCount = currentPlayerCount;
+    }
+
+    public boolean isTournament() { //getter Tournament
+        return tournament;
+    }
+
+    public void setTournament(boolean tournament) { //setter Tournament
+        this.tournament = tournament;
+    }
+
+    public List<Player> getPlayers() { //getter Players from game
+        return players;
+    }
+
+    public int getRound() { //getter Roundnumber
+        return round;
+    }
+
+    public GameState getState() { //getter Gamestate
+        return state;
+    }
+
+    public Configuration getConfig() { //getter Configuration
+        return config;
+    }
+
+    public List<Field> getFields() {//getter fields
+        return fields;
+    }
+
+    public long getTimeLeft() { //getter left time
+        return timeLeft;
+    }
 
 }
