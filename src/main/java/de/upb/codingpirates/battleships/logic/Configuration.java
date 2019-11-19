@@ -2,9 +2,9 @@ package de.upb.codingpirates.battleships.logic;
 
 import java.util.List;
 
-public class GameConfiguration {
+public class Configuration {
     //TODO DefaultConfiguration
-    enum PenaltyType{NOTHING, KICK, POINTLOSS};
+    enum PenaltyType{NOTHING, KICK, POINTLOSS}
     public final int MAXPLAYERCOUNT;
     public final int FIELDHEIGHT;
     public final int FIELDWIDTH;
@@ -17,7 +17,7 @@ public class GameConfiguration {
     public final float PENALTYMINUSPOINTS;
     public final PenaltyType PENALTYTYPE;
 
-    public GameConfiguration(int MAXPLAYERCOUNT, int FIELDHEIGHT, int FIELDWIDTH, int SHOTCOUNT, float HITPOINTS, float SUNKPOINTS, long ROUNDTIMER, long VISUALIZATIONTIME, List<de.upb.codingpirates.battleships.logic.ShipType> SHIPTYPES, float PENALTYMINUSPOINTS, PenaltyType PENALTYTYPE) {
+    public Configuration(int MAXPLAYERCOUNT, int FIELDHEIGHT, int FIELDWIDTH, int SHOTCOUNT, float HITPOINTS, float SUNKPOINTS, long ROUNDTIMER, long VISUALIZATIONTIME, List<de.upb.codingpirates.battleships.logic.ShipType> SHIPTYPES, float PENALTYMINUSPOINTS, PenaltyType PENALTYTYPE) {
         this.MAXPLAYERCOUNT = MAXPLAYERCOUNT;
         this.FIELDHEIGHT = FIELDHEIGHT;
         this.FIELDWIDTH = FIELDWIDTH;
