@@ -10,7 +10,6 @@ public class Player {
     private Field ownField;
     private ArrayList<Ship> ships;
 
-    enum Rotation {NONE,CLOCKWISE_90,CLOCKWISE_180,COUNTERCLOCKWISE_90};
 
     public Player(int id,String name){
         this.id = id;
@@ -25,7 +24,7 @@ public class Player {
 
     }
 
-    public void positionShip(Ship ship, Point2D position, Rotation rotation){
+    public void positionShip(Ship ship, PlacementInfo placementInfo){
 
     }
 

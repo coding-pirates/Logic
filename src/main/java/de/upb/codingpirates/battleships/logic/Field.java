@@ -23,9 +23,9 @@ public class Field {
         field.put(x,y,point);
     }
 
-    public boolean placeShip(Ship ship, Point2D position, int rotation){
+    public boolean placeShip(Ship ship, PlacementInfo placementInfo){
         Collection<Point2D> p = ship.getPositions();
-        if (rotation == 0)//0Grad gedreht
+        /*if (rotation == 0)//0Grad gedreht
         {
             for (Iterator it = p.iterator(); it.hasNext(); ){
                     ;
@@ -43,7 +43,7 @@ public class Field {
         else //90grad nach links
             {
                 ;
-        }
+        }*/
     return true;
     }
 
