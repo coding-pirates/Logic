@@ -1,4 +1,4 @@
-package de.upb.codingpirates.battleships.logic.util;
+package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -93,7 +93,7 @@ public class Configuration {
     }
 
     @Nonnull
-    public Map<Integer, ShipType> getShipTypes() {
+    public Map<Integer, ShipType> getShips() {
         return ImmutableMap.copyOf(SHIPTYPES);
     }
 }

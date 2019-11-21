@@ -1,4 +1,4 @@
-package de.upb.codingpirates.battleships.logic.util;
+package de.upb.codingpirates.battleships.logic;
 
 import javax.annotation.Nonnull;
 
@@ -38,12 +38,13 @@ public class Game {
      */
     private boolean tournament;
 
-    public Game(@Nonnull String name, int id, int currentPlayerCount, @Nonnull GameState state, @Nonnull Configuration config) {
+    public Game(@Nonnull String name, int id, @Nonnull GameState state, @Nonnull Configuration config, boolean tournament) {
         this.name = name;
         this.id = id;
-        this.currentPlayerCount = currentPlayerCount;
+        this.currentPlayerCount = 0;
         this.state = state;
         this.config = config;
+        this.tournament = tournament;
     }
 
     @Nonnull
@@ -59,6 +60,24 @@ public class Game {
         return currentPlayerCount;
     }
 
+    /**
+     * increases the {@link #currentPlayerCount}
+     *
+     * @return new {@link #currentPlayerCount}
+     */
+    public int addPlayer() {
+        return currentPlayerCount = Math.max(0, ++currentPlayerCount);
+    }
+
+    /**
+     * decreases the {@link #currentPlayerCount}
+     *
+     * @return new {@link #currentPlayerCount}
+     */
+    public int removePlayer() {
+        return currentPlayerCount = Math.max(0, --currentPlayerCount);
+    }
+
     @Nonnull
     public GameState getState() {
         return state;
@@ -69,11 +88,8 @@ public class Game {
         return config;
     }
 
-    public boolean isTournament() {
+    public boolean ownedByTournament() {
         return tournament;
     }
 
-    public void setTournament(boolean tournament) {
-        this.tournament = tournament;
-    }
 }

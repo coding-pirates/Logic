@@ -1,10 +1,10 @@
-package de.upb.codingpirates.battleships.logic.util;
+package de.upb.codingpirates.battleships.logic;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
- * Represents a shiptype.
+ * Represents a ship.
  *
  * @author Interdoc committee & Paul Becker
  */
