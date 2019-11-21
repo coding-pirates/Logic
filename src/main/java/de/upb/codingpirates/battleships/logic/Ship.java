@@ -1,26 +1,25 @@
 package de.upb.codingpirates.battleships.logic;
 
 import java.util.Collection;
-import java.util.List;
 
 public class Ship {
 
     private ShipType shipType;
     private Collection<Point2D> positions;
 
-    public Ship(ShipType type) {
-        this.positions = type.getPosition();
+    public Ship(ShipType type, Collection<Point2D> positions) {
+        this.positions = positions;
         this.shipType = type;
     }
 
     /**
      * removes point from {@link #positions}
      *
-     * @param point
      * @return if {@link #positions} is empty returns true
      */
-    public boolean hit(Point2D point) {//TODO
-        return false;
+    public boolean hit(Point2D point) {
+        positions.remove(point);
+        return positions.isEmpty();
     }
 
     public ShipType getShipType() {
