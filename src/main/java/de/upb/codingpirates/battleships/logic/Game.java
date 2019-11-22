@@ -92,4 +92,7 @@ public class Game {
         return tournament;
     }
 
+    public void setState(@Nonnull GameState state) {
+        this.state = state;
+    }
 }
