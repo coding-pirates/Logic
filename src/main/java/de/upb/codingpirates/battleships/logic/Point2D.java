@@ -28,4 +28,12 @@ public class Point2D {
     public int getY() {
         return y;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Point2D){
+            return ((Point2D)obj).x == x && ((Point2D)obj).y == y;
+        }
+        return false;
+    }
 }

@@ -17,22 +17,22 @@ public class Field {
     }
 
     /**
-     * if ship exists at point the ship gets hit and removed from {@link #field}
+     * if ship exists at shot the ship gets hit and removed from {@link #field}
      *
-     * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the point is not in the field
+     * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the shot is not in the field
      */
-    public HitType hit(Point2D point) {
-        if (point.getX() > width || point.getY() > height)
-            return HitType.FAIL;
-        if (field.contains(point.getX(), point.getY())){
-            Ship ship = field.remove(point.getX(), point.getY());
+    public ShotHit hit(Shot shot) {
+        if (shot.getTargetField().getX() > width || shot.getTargetField().getY() > height)
+            return new ShotHit(HitType.FAIL);
+        if (field.contains(shot.getTargetField().getX(), shot.getTargetField().getY())){
+            Ship ship = field.remove(shot.getTargetField().getX(), shot.getTargetField().getY());
             if (ship == null)
-                return HitType.NONE;
-            if (ship.hit(point))
-                return HitType.SUNK;
-            return HitType.HIT;
+                return new ShotHit(HitType.NONE);
+            if (ship.hit(shot.getTargetField()))
+                return new ShotHit(ship, shot,HitType.SUNK);
+            return new ShotHit(ship, shot,HitType.HIT);
         }
-        return HitType.NONE;
+        return new ShotHit(HitType.NONE);
     }
 
     /**
