@@ -5,21 +5,21 @@ import java.util.Collection;
 public class Ship {
 
     private ShipType shipType;
-    private Collection<Point2D> leftShipParts;
+    private Collection<Point2D> positions;
 
     public Ship(ShipType type, Collection<Point2D> positions) {
-        this.leftShipParts = positions;
+        this.positions = positions;
         this.shipType = type;
     }
 
     /**
-     * removes point from {@link #leftShipParts}
+     * removes point from {@link #positions}
      *
-     * @return if {@link #leftShipParts} is empty returns true
+     * @return if {@link #positions} is empty returns true
      */
     public boolean hit(Point2D point) {
-        leftShipParts.remove(point);
-        return leftShipParts.isEmpty();
+        positions.remove(point);
+        return positions.isEmpty();
     }
 
     public ShipType getShipType() {
