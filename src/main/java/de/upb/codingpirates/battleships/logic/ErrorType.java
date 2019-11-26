@@ -1,4 +1,4 @@
-package de.upb.codingpirates.battleships.logic.util;
+package de.upb.codingpirates.battleships.logic;
 
 /**
  * @author Interdoc committee & Paul Becker
