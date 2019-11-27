@@ -2,15 +2,16 @@ package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Field {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogManager().getLogger(Field.class.getName());
 
     private int height;
     private int width;
@@ -46,7 +47,7 @@ public class Field {
      */
     public Ship placeShip(ShipType ship, PlacementInfo placementInfo) {
         Collection<Point2D> positions = ship.getPositions().stream().map(point2D -> point2D.getPointWithOffset(placementInfo.getPosition())).collect(Collectors.toList());
-        LOGGER.debug("placeship"+positions);
+        LOGGER.log(Level.INFO,"placeship"+positions);
         int square_length = getSquareLength(positions);
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
         if (checkPositions(square_length, placementInfo.getPosition())){
@@ -69,7 +70,7 @@ public class Field {
             maxX = Math.max(maxX, point.getX());
             maxY = Math.max(maxY, point.getY());
         }
-        LOGGER.debug("max"+maxX+""+ maxY);
+        LOGGER.log(Level.INFO,"max"+maxX+""+ maxY);
         return Math.max(maxX+1, maxY+1); //+1 für das Element mit Index 0
     }
 
@@ -92,7 +93,7 @@ public class Field {
                     }}
             }
         }
-        LOGGER.debug("createquare"+table);
+        LOGGER.log(Level.INFO,"createquare"+table);
         return table;
     }
 
@@ -112,11 +113,11 @@ public class Field {
      */
     private HashBasedTable<Integer, Integer, Point2D> rotate (int length, int rotation, HashBasedTable<Integer, Integer, Point2D> table){
         HashBasedTable<Integer, Integer, Point2D> tableRotated = HashBasedTable.create(table);
-        LOGGER.debug("rotate table");
+        LOGGER.log(Level.INFO,"rotate table");
         for (int r = rotation; r>0; r--){
             tableRotated = rotate90(length, tableRotated);
         }
-        LOGGER.debug("finish rotate");
+        LOGGER.log(Level.INFO,"finish rotate");
         return tableRotated;
     }
 
@@ -135,7 +136,7 @@ public class Field {
                     tableRotated.put(j, totalColumn-i, table.get(i,j));
                 }}
         }
-        LOGGER.debug("rotated"+tableRotated);
+        LOGGER.log(Level.INFO,"rotated"+tableRotated);
         return tableRotated;
     }
 
@@ -147,8 +148,8 @@ public class Field {
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
         Ship ship = new Ship(type, table.values());
-        LOGGER.debug("in fillField");
-        LOGGER.debug("in fillField2");
+        LOGGER.log(Level.INFO,"in fillField");
+        LOGGER.log(Level.INFO,"in fillField2");
         for (int x=0; x<length;x++) {
             for (int y = 0; y < length; y++) {
                 Point2D temp = table.get(x,y);
@@ -157,7 +158,7 @@ public class Field {
                 }
             }
         }
-        LOGGER.debug("end fillfield"+field);
+        LOGGER.log(Level.INFO,"end fillfield"+field);
         return ship;
     }
 }
