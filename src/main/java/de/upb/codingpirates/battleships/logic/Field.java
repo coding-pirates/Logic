@@ -2,12 +2,12 @@ package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import de.upb.codingpirates.battleships.logic.util.LogicMarker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
 public class Field {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -15,11 +15,13 @@ public class Field {
     private int height;
     private int width;
     private Table<Integer, Integer, Ship> field;
+    private int clientId;
 
-    public Field(int height, int width) {
+    public Field(int height, int width, int clientId) {
         this.height = height;
         this.width = width;
         this.field = HashBasedTable.create();
+        this.clientId = clientId;
     }
 
     /**
@@ -27,26 +29,27 @@ public class Field {
      *
      * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the point is not in the field
      */
-    public HitType hit(Point2D point) {
-        if (point.getX() > width || point.getY() > height)
-            return HitType.FAIL;
-        if (field.contains(point.getX(), point.getY())){
-            Ship ship = field.remove(point.getX(), point.getY());
+    public ShotHit hit(Shot shot) {
+        LOGGER.debug(LogicMarker.SHOTSPLACEMENT,"Shot at {}, for clientId {}",shot.getTargetField(), shot.getClientId());
+        if (shot.getTargetField().getX() > width || shot.getTargetField().getY() > height)
+            return new ShotHit(HitType.FAIL);
+        if (field.contains(shot.getTargetField().getX(), shot.getTargetField().getY())){
+            Ship ship = field.remove(shot.getTargetField().getX(), shot.getTargetField().getY());
             if (ship == null)
-                return HitType.NONE;
-            if (ship.hit(point))
-                return HitType.SUNK;
-            return HitType.HIT;
+                return new ShotHit(HitType.NONE);
+            if (ship.hit(shot.getTargetField()))
+                return new ShotHit(ship, shot,HitType.SUNK);
+            return new ShotHit(ship, shot,HitType.HIT);
         }
-        return HitType.NONE;
+        return new ShotHit(HitType.NONE);
     }
 
     /**
      * turns a {@link ShipType} with relative positions into a ship with absolute positions. Places the ship at the absolute positions to {@link #field} and returns the ship.
      */
     public Ship placeShip(ShipType ship, PlacementInfo placementInfo) {
-        Collection<Point2D> positions = ship.getPositions().stream().map(point2D -> point2D.getPointWithOffset(placementInfo.getPosition())).collect(Collectors.toList());
-        LOGGER.debug("placeship"+positions);
+        Collection<Point2D> positions = ship.getPositions();
+        LOGGER.debug(LogicMarker.SHIPPLACEMENT,"Place ship at {} for player {}",positions,clientId);
         int square_length = getSquareLength(positions);
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
         if (checkPositions(square_length, placementInfo.getPosition())){
@@ -69,7 +72,7 @@ public class Field {
             maxX = Math.max(maxX, point.getX());
             maxY = Math.max(maxY, point.getY());
         }
-        LOGGER.debug("max"+maxX+""+ maxY);
+        LOGGER.debug(LogicMarker.SHIPPLACEMENT,"Max ship size: {}, {}",maxX, maxY);
         return Math.max(maxX+1, maxY+1); //+1 für das Element mit Index 0
     }
 
@@ -92,7 +95,7 @@ public class Field {
                     }}
             }
         }
-        LOGGER.debug("createquare"+table);
+//        LOGGER.debug("createquare"+table);
         return table;
     }
 
@@ -100,7 +103,7 @@ public class Field {
      * checks if the ship fit at this position in the field
      */
     private boolean checkPositions(int length, Point2D point){
-        return (point.getX()+length<=width && point.getY()-length>=0);
+        return point.getX()>= 0 && point.getY() >= 0 && point.getX()+length< width && point.getY()+length < height;
     }
 
     /**
@@ -112,11 +115,10 @@ public class Field {
      */
     private HashBasedTable<Integer, Integer, Point2D> rotate (int length, int rotation, HashBasedTable<Integer, Integer, Point2D> table){
         HashBasedTable<Integer, Integer, Point2D> tableRotated = HashBasedTable.create(table);
-        LOGGER.debug("rotate table");
+        LOGGER.debug(LogicMarker.SHIPPLACEMENT,"Rotate ship");
         for (int r = rotation; r>0; r--){
             tableRotated = rotate90(length, tableRotated);
         }
-        LOGGER.debug("finish rotate");
         return tableRotated;
     }
 
@@ -135,7 +137,7 @@ public class Field {
                     tableRotated.put(j, totalColumn-i, table.get(i,j));
                 }}
         }
-        LOGGER.debug("rotated"+tableRotated);
+        LOGGER.debug(LogicMarker.SHIPPLACEMENT,"Rotated ship");
         return tableRotated;
     }
 
@@ -146,18 +148,10 @@ public class Field {
      * place the ship in the field, at the correct positions
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
+        LOGGER.debug(LogicMarker.SHIPPLACEMENT,"Fill ship to field");
+        table.columnMap().forEach((x,map)-> map.replaceAll((y, point1)-> point.getPointWithOffset(x,y)));
         Ship ship = new Ship(type, table.values());
-        LOGGER.debug("in fillField");
-        LOGGER.debug("in fillField2");
-        for (int x=0; x<length;x++) {
-            for (int y = 0; y < length; y++) {
-                Point2D temp = table.get(x,y);
-                if (temp != null){
-                    field.put(point.getY()+temp.getY(),point.getX()+temp.getX(), ship);
-                }
-            }
-        }
-        LOGGER.debug("end fillfield"+field);
+        table.values().forEach(point1 -> field.put(point1.getX(),point1.getY(),ship));
         return ship;
     }
 }
