@@ -18,7 +18,7 @@ public class Ship {
      * @return if {@link #leftShipParts} is empty returns true
      */
     public boolean hit(Point2D point) {
-        leftShipParts.remove(point);
+        this.leftShipParts.remove(point);
         return leftShipParts.isEmpty();
     }
 
