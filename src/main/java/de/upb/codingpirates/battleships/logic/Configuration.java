@@ -1,9 +1,10 @@
 package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Map;
  * @author Interdoc committee & Paul Becker
  */
 public class Configuration {
-    public static final Configuration DEFAULT = new Configuration(0, 0, 0, 0, 0, 0, 0, 0, Maps.newHashMap(), 1, PenaltyType.POINTLOSS);
+    public static final Configuration DEFAULT = new Configuration(4, 10, 10, 4, 1, 1, 10000, 1000, new HashMap<Integer, ShipType>(){{put(0,new ShipType(Lists.newArrayList(new Point2D(3,3),new Point2D(4,3),new Point2D(3,4))));}}, 1, PenaltyType.POINTLOSS);
 
     /**
      * max player possible in one game

@@ -16,11 +16,13 @@ public class Field {
     private int height;
     private int width;
     private Table<Integer, Integer, Ship> field;
+    private int clientId;
 
-    public Field(int height, int width) {
+    public Field(int height, int width, int clientId) {
         this.height = height;
         this.width = width;
         this.field = HashBasedTable.create();
+        this.clientId = clientId;
     }
 
     /**
@@ -29,6 +31,7 @@ public class Field {
      * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the shot is not in the field
      */
     public ShotHit hit(Shot shot) {
+        LOGGER.log(Level.INFO,"Shot at "+shot.getTargetField()+", for clientId "+shot.getClientId());
         if (shot.getTargetField().getX() > width || shot.getTargetField().getY() > height)
             return new ShotHit(HitType.FAIL);
         if (field.contains(shot.getTargetField().getX(), shot.getTargetField().getY())){
@@ -46,8 +49,8 @@ public class Field {
      * turns a {@link ShipType} with relative positions into a ship with absolute positions. Places the ship at the absolute positions to {@link #field} and returns the ship.
      */
     public Ship placeShip(ShipType ship, PlacementInfo placementInfo) {
-        Collection<Point2D> positions = ship.getPositions().stream().map(point2D -> point2D.getPointWithOffset(placementInfo.getPosition())).collect(Collectors.toList());
-        LOGGER.log(Level.INFO,"placeship"+positions);
+        Collection<Point2D> positions = ship.getPositions();
+        LOGGER.log(Level.INFO,"Place ship at "+positions+" for player "+clientId);
         int square_length = getSquareLength(positions);
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
         if (checkPositions(square_length, placementInfo.getPosition())){
@@ -70,7 +73,7 @@ public class Field {
             maxX = Math.max(maxX, point.getX());
             maxY = Math.max(maxY, point.getY());
         }
-        LOGGER.log(Level.INFO,"max"+maxX+""+ maxY);
+        LOGGER.log(Level.INFO,"Max ship size: "+maxX+", "+ maxY);
         return Math.max(maxX+1, maxY+1); //+1 für das Element mit Index 0
     }
 
@@ -93,7 +96,7 @@ public class Field {
                     }}
             }
         }
-        LOGGER.log(Level.INFO,"createquare"+table);
+        //LOGGER.log(Level.INFO,"createquare"+table);
         return table;
     }
 
@@ -101,7 +104,7 @@ public class Field {
      * checks if the ship fit at this position in the field
      */
     private boolean checkPositions(int length, Point2D point){
-        return (point.getX()+length<=width && point.getY()-length>=0);
+        return point.getX()>= 0 && point.getY() >= 0 && point.getX()+length< width && point.getY()+length < height;
     }
 
     /**
@@ -117,7 +120,6 @@ public class Field {
         for (int r = rotation; r>0; r--){
             tableRotated = rotate90(length, tableRotated);
         }
-        LOGGER.log(Level.INFO,"finish rotate");
         return tableRotated;
     }
 
@@ -147,18 +149,10 @@ public class Field {
      * place the ship in the field, at the correct positions
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
+        LOGGER.log(Level.INFO,"Fill ship to field");
+        table.columnMap().forEach((x,map)-> map.replaceAll((y, point1)-> point.getPointWithOffset(x,y)));
         Ship ship = new Ship(type, table.values());
-        LOGGER.log(Level.INFO,"in fillField");
-        LOGGER.log(Level.INFO,"in fillField2");
-        for (int x=0; x<length;x++) {
-            for (int y = 0; y < length; y++) {
-                Point2D temp = table.get(x,y);
-                if (temp != null){
-                    field.put(point.getY()+temp.getY(),point.getX()+temp.getX(), ship);
-                }
-            }
-        }
-        LOGGER.log(Level.INFO,"end fillfield"+field);
+        table.values().forEach(point1 -> field.put(point1.getX(),point1.getY(),ship));
         return ship;
     }
 }

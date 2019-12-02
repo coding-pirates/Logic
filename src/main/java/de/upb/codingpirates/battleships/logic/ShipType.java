@@ -25,4 +25,5 @@ public class ShipType {
     public Collection<Point2D> getPositions() {
         return positions;
     }
+
 }
