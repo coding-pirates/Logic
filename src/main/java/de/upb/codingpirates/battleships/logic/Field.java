@@ -4,7 +4,9 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,6 +55,10 @@ public class Field {
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
         if (checkPositions(square_length, placementInfo.getPosition())){
             square = rotate(square_length, placementInfo.getRotation().ordinal(), square);
+            HashBasedTable<Integer, Integer, Point2D> check = checkPoints(square, square_length);
+            if (check != null){
+                square = check;
+            }
             return fillField(placementInfo.getPosition(), square, square_length, ship);
         } else{
             return null;
@@ -60,26 +66,62 @@ public class Field {
     }
 
     /**
+     * checks the table if the first column (column =0) is empty, or the first row (row =0) is empty, then move the point upwards /leftwards
+     * @param table with the points of the ship
+     * @param length of the square
+     * @return the movedTable
+     */
+    private HashBasedTable<Integer, Integer, Point2D> checkPoints(HashBasedTable<Integer, Integer, Point2D> table, int length){
+        HashBasedTable<Integer, Integer, Point2D> newTable = HashBasedTable.create();
+        if (table.column(0).isEmpty()){
+            for (int row=0; row<length+1; row++){
+                for (int col=0; col<length+1; col++){
+                            if(table.get(row, col) != null){
+                                System.out.println("in checkPoints column");
+                                newTable.put(row, col-1, table.get(row, col));
+                            }
+                        }}
+            System.out.println("in checkPoints"+newTable);
+        return newTable;
+        }
+        else if (table.row(0).isEmpty()){
+            System.out.println(table.row(0).toString());
+            for (int row=0; row<length+1; row++){
+                for (int col=0; col<length+1; col++){
+                    if(table.get(row, col) != null){
+                        System.out.println("in checkPoints row");
+                        newTable.put(row-1, col, table.get(row, col));
+                    }
+                }}
+            System.out.println("in checkPoints"+newTable);
+            return newTable;
+        }
+
+        System.out.println("in checkPoints"+table);
+        return table;
+        }
+
+    /**
      * @param  positions Collection with points of one ship
      * @return int length für square
      */
     private int getSquareLength(Collection<Point2D> positions){
-        int maxX=0, minX = 1000000000;
-        int maxY=0, minY = 1000000000;
+        int maxColumn=0, minColumn = 1000000000;
+        int maxRow=0, minRow = 1000000000;
         for (Iterator it = positions.iterator(); it.hasNext(); ){
             Point2D point = (Point2D) it.next();
-            maxX = Math.max(maxX, point.getX());
-            minX = Math.min(minX, point.getX());
-            minY = Math.min(minY, point.getY());
-            maxY = Math.max(maxY, point.getY());
+            maxColumn = Math.max(maxColumn, point.getX());
+            minColumn = Math.min(minColumn, point.getX());
+            minRow = Math.min(minRow, point.getY());
+            maxRow = Math.max(maxRow, point.getY());
         }
-        LOGGER.log(Level.INFO,"max"+maxX+""+ maxY);
+        LOGGER.log(Level.INFO,"max"+maxColumn+""+ maxRow);
         //transform points of ship to (0,0)
         for (Point2D p: positions){
-            p.setX(p.getX()-minX);
-            p.setY(p.getY()-minY);
+            p.setX(p.getX()-minColumn);
+            p.setY(p.getY()-minRow);
         }
-        return Math.max(maxX-minX, maxY-minY)+1; //+1 for the Element with index 0
+        return Math.max(maxColumn-minColumn, maxRow-minRow)+1; //+1 for the Element with index 0
     }
 
     /**
@@ -91,14 +133,12 @@ public class Field {
     private HashBasedTable<Integer, Integer, Point2D> createSquare(int length, Collection<Point2D> positions){
         HashBasedTable<Integer, Integer, Point2D> table = HashBasedTable.create();
         //System.out.println("in createsquare  square länge"+ length);
-        for (int x=0; x<length+1; x++){
-            for (int y=0; y<length+1;y++){
-                //boolean found = false;
+        for (int row=0; row<length+1; row++){
+            for (int col=0; col<length+1; col++){
                 for (Point2D p: positions){
-                    if (p.getX() == x && p.getY() == y){
-                        //found = true;
+                    if (p.getX() == row && p.getY() == col){
                         //System.out.println("in createsquare  square"+p.getX()+p.getY());
-                        table.put(x,y,p);
+                        table.put(row,col,p);
                         break;
                     }}
             }
@@ -140,10 +180,10 @@ public class Field {
         HashBasedTable<Integer, Integer, Point2D> tableRotated = HashBasedTable.create();
         int totalColumn = length-1;
         int totalRows= length-1;
-        for(int i=0; i<=totalRows; i++){
-            for(int j=0; j<=totalColumn;j++){
-                if(table.get(i, j)!= null){
-                    tableRotated.put(j, totalColumn-i, table.get(i,j));
+        for(int j=0; j<=totalRows;j++){
+            for(int i=0; i<=totalColumn; i++){
+                if(table.get(j,i) != null){
+                    tableRotated.put(i, length-1-j, table.get(j,i));
                 }}
         }
         LOGGER.log(Level.INFO,"rotated"+tableRotated);
@@ -158,16 +198,50 @@ public class Field {
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
         Ship ship = new Ship(type, table.values());
-        //System.out.println("in fillField");
+        System.out.println("in fillField"+point.toString());
         LOGGER.log(Level. INFO,"in fillField");
         //System.out.println("in fillField2+table"+table.isEmpty());
-        for (int x=0; x<length;x++) {
-            for (int y = 0; y < length; y++) {
-                Point2D shipPoint = table.get(x,y);
-                //System.out.println("in fillField:"+shipPoint==null);
-                if (shipPoint != null){
-                    //System.out.print(1);
-                    field.put(point.getY()+shipPoint.getY(),point.getX()+shipPoint.getX(), ship);
+        if (table.get(0,0)!= null) {
+            for (int row = 0; row < length; row++) {
+                for (int col = 0; col < length; col++) {
+                    Point2D shipPoint = table.get(row, col);
+                    //System.out.println("in fillField:"+shipPoint==null);
+                    if (shipPoint != null) {
+                        System.out.println("found shippoint" + shipPoint.toString());
+                        field.put(point.getX() + row, point.getY() + col, ship);
+                    }
+                }
+            }
+        }
+        else {
+            Map<Integer, Point2D> tableRow = table.row(0);
+            //System.out.println("in else"+tableRow.isEmpty());
+            int min = (int) Collections.min(tableRow.keySet());
+            HashBasedTable<Integer, Integer, Point2D> movedTable = HashBasedTable.create();
+            for (int row = 0; row < length; row++) {
+                for (int col = 0; col < length; col++) {
+                    if(table.get(row, col) != null){
+                    movedTable.put(row, col-min, table.get(row, col));
+                }}
+            }
+            System.out.println(movedTable.toString());
+            for (int r = 0; r < length; r++) {
+                int minKeyRows =  Collections.min(movedTable.row(r).keySet());
+                //System.out.println(minKeyRows);
+                //System.out.println("in movedTable1"+movedTable.row(r).keySet()+"row"+r);
+                while(minKeyRows<0){
+                    //System.out.println("in movedTable"+minKeyRows);
+                    field.put(point.getX() + r, (int) (point.getY() + minKeyRows), ship);
+                    movedTable.remove(r, minKeyRows);
+                    minKeyRows = (int) Collections.min(table.row(r).keySet());
+                }
+                for (int col = 0; col < length; col++) {
+                    Point2D shipPoint = movedTable.get(r, col);
+                    //System.out.println("in fillField:"+shipPoint==null);
+                    if (shipPoint != null) {
+                        //System.out.println("found shippoint" + movedTable.toString());
+                        field.put(point.getX() + r, (int) (point.getY() + col), ship);
+                    }
                 }
             }
         }

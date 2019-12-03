@@ -50,9 +50,9 @@ public class LogicTest {
         Field field2 = new Field(config.getHeight(), config.getWidth(),2);
         Field field3 = new Field(config.getHeight(), config.getWidth(),3);
 
-        PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2,5), Rotation.CLOCKWISE_90);
+        PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2,5), Rotation.COUNTERCLOCKWISE_90);
         field1.placeShip(shipType1, placementInfo1);
-        System.out.println("field is empty"+field1.getField().isEmpty());
+        System.out.println("field is empty "+field1.getField().isEmpty());
         System.out.println(field1.getField().toString());
     }
 
