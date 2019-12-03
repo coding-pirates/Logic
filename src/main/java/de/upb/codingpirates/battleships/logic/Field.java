@@ -6,12 +6,10 @@ import com.google.common.collect.Table;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class Field {
-    private static final Logger LOGGER = LogManager.getLogManager().getLogger(Field.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Field.class.getName());
 
     private int height;
     private int width;
@@ -96,7 +94,7 @@ public class Field {
                     }}
             }
         }
-        //LOGGER.log(Level.INFO,"createquare"+table);
+        LOGGER.log(Level.INFO,"createquare"+table);
         return table;
     }
 
