@@ -48,10 +48,13 @@ public class Field {
         Collection<Point2D> positions = ship.getPositions().stream().map(point2D -> point2D.getPointWithOffset(placementInfo.getPosition())).collect(Collectors.toList());
         LOGGER.debug("placeship"+positions);
         int square_length = getSquareLength(positions);
+        //System.out.println("quadratlänge"+square_length);
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
+        //System.out.println("in placeship  square"+square.isEmpty());
         if (checkPositions(square_length, placementInfo.getPosition())){
-            System.out.println("In if in placeShip");
+            //System.out.println("In if in placeShip");
             square = rotate(square_length, placementInfo.getRotation().ordinal(), square);
+            //System.out.println("in placeship  square"+square.isEmpty());
             return fillField(placementInfo.getPosition(), square, square_length, ship);
         } else{
             return null;
@@ -63,15 +66,22 @@ public class Field {
      * @return int length für square
      */
     private int getSquareLength(Collection<Point2D> positions){
-        int maxX=0;
-        int maxY=0;
+        int maxX=0, minX = 1000000000;
+        int maxY=0, minY = 1000000000;
         for (Iterator it = positions.iterator(); it.hasNext(); ){
             Point2D point = (Point2D) it.next();
+            minX = Math.min(minX, point.getX());
+            minY = Math.min(minY, point.getY());
             maxX = Math.max(maxX, point.getX());
             maxY = Math.max(maxY, point.getY());
         }
         LOGGER.debug("max"+maxX+""+ maxY);
-        return Math.max(maxX+1, maxY+1); //+1 für das Element mit Index 0
+        //Ship to (0,0)
+        for (Point2D p: positions){
+            p.setX(p.getX()-minX);
+            p.setY(p.getY()-minY);
+        }
+        return Math.max(maxX-minX, maxY-minY)+1; //+1 for the Element with index 0
     }
 
     /**
@@ -82,17 +92,20 @@ public class Field {
      **/
     private  HashBasedTable<Integer, Integer, Point2D> createSquare(int length, Collection<Point2D> positions){
         HashBasedTable<Integer, Integer, Point2D> table = HashBasedTable.create();
+        //System.out.println("in createsquare  square länge "+ length);
         for (int x=0; x<length+1; x++){
             for (int y=0; y<length+1;y++){
-                boolean found = false;
+                //boolean found = false;
                 for (Point2D p: positions){
                     if (p.getX() == x && p.getY() == y){
-                        found = true;
+                        //found = true;
+                        //System.out.println("in createsquare  square"+p.getX()+p.getY());
                         table.put(x,y,p);
                         break;
                     }}
             }
         }
+        //System.out.println("in createsquare  square"+table.isEmpty());
         LOGGER.debug("createquare"+table);
         return table;
     }
@@ -101,8 +114,8 @@ public class Field {
      * checks if the ship fit at this position in the field
      */
     private boolean checkPositions(int length, Point2D point){
-        System.out.println("in checkPositions");
-        System.out.println((point.getX()+length<=width && point.getY()-length>=0));
+        //System.out.println("in checkPositions"+"x:"+point.getX()+"länge"+length+"breite"+width+"y"+ point.getY()+"länge"+length);
+        //System.out.println((point.getX()+length<=width && point.getY()-length>=0));
         return (point.getX()+length<=width && point.getY()-length>=0);
     }
 
@@ -150,14 +163,16 @@ public class Field {
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
         Ship ship = new Ship(type, table.values());
+        //System.out.println("in fillField");
         LOGGER.debug("in fillField");
-        LOGGER.debug("in fillField2");
+        //System.out.println("in fillField2+table"+table.isEmpty());
         for (int x=0; x<length;x++) {
             for (int y = 0; y < length; y++) {
-                Point2D temp = table.get(x,y);
-                if (temp != null){
-                    System.out.print(1);
-                    field.put(point.getY()+temp.getY(),point.getX()+temp.getX(), ship);
+                Point2D shipPoint = table.get(x,y);
+                //System.out.println("in fillField:"+shipPoint==null);
+                if (shipPoint != null){
+                    //System.out.print(1);
+                    field.put(point.getY()+shipPoint.getY(),point.getX()+shipPoint.getX(), ship);
                 }
             }
         }

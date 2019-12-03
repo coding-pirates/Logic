@@ -11,6 +11,15 @@ public class Point2D {
      * x-coordinate of the point
      */
     private int x;
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     /**
      * y-coordinate of the point
      */
