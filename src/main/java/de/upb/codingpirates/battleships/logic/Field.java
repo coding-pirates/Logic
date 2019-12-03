@@ -50,6 +50,7 @@ public class Field {
         int square_length = getSquareLength(positions);
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
         if (checkPositions(square_length, placementInfo.getPosition())){
+            System.out.println("In if in placeShip");
             square = rotate(square_length, placementInfo.getRotation().ordinal(), square);
             return fillField(placementInfo.getPosition(), square, square_length, ship);
         } else{
@@ -100,6 +101,8 @@ public class Field {
      * checks if the ship fit at this position in the field
      */
     private boolean checkPositions(int length, Point2D point){
+        System.out.println("in checkPositions");
+        System.out.println((point.getX()+length<=width && point.getY()-length>=0));
         return (point.getX()+length<=width && point.getY()-length>=0);
     }
 
@@ -153,11 +156,16 @@ public class Field {
             for (int y = 0; y < length; y++) {
                 Point2D temp = table.get(x,y);
                 if (temp != null){
+                    System.out.print(1);
                     field.put(point.getY()+temp.getY(),point.getX()+temp.getX(), ship);
                 }
             }
         }
         LOGGER.debug("end fillfield"+field);
         return ship;
+    }
+
+    public Table<Integer, Integer, Ship> getField() {
+        return field;
     }
 }
