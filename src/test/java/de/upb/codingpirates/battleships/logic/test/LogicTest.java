@@ -46,9 +46,9 @@ public class LogicTest {
         game.addPlayer();
         game.addPlayer();
 
-        Field field1 = new Field(config.getHeight(), config.getWidth());
-        Field field2 = new Field(config.getHeight(), config.getWidth());
-        Field field3 = new Field(config.getHeight(), config.getWidth());
+        Field field1 = new Field(config.getHeight(), config.getWidth(),1);
+        Field field2 = new Field(config.getHeight(), config.getWidth(),2);
+        Field field3 = new Field(config.getHeight(), config.getWidth(),3);
 
         PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2,5), Rotation.CLOCKWISE_90);
         field1.placeShip(shipType1, placementInfo1);

@@ -2,24 +2,25 @@ package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Field {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = Logger.getLogger(Field.class.getName());
 
     private int height;
     private int width;
     private Table<Integer, Integer, Ship> field;
+    private int clientId;
 
-    public Field(int height, int width) {
+    public Field(int height, int width, int clientId) {
         this.height = height;
         this.width = width;
         this.field = HashBasedTable.create();
+        this.clientId = clientId;
     }
 
     /**
@@ -27,34 +28,31 @@ public class Field {
      *
      * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the point is not in the field
      */
-    public HitType hit(Point2D point) {
-        if (point.getX() > width || point.getY() > height)
-            return HitType.FAIL;
-        if (field.contains(point.getX(), point.getY())){
-            Ship ship = field.remove(point.getX(), point.getY());
+    public ShotHit hit(Shot shot) {
+        LOGGER.log(Level.INFO,"Shot at "+shot.getTargetField()+", for clientId "+shot.getClientId());
+        if (shot.getTargetField().getX() > width || shot.getTargetField().getY() > height)
+            return new ShotHit(HitType.FAIL);
+        if (field.contains(shot.getTargetField().getX(), shot.getTargetField().getY())){
+            Ship ship = field.remove(shot.getTargetField().getX(), shot.getTargetField().getY());
             if (ship == null)
-                return HitType.NONE;
-            if (ship.hit(point))
-                return HitType.SUNK;
-            return HitType.HIT;
+                return new ShotHit(HitType.NONE);
+            if (ship.hit(shot.getTargetField()))
+                return new ShotHit(ship, shot,HitType.SUNK);
+            return new ShotHit(ship, shot,HitType.HIT);
         }
-        return HitType.NONE;
+        return new ShotHit(HitType.NONE);
     }
 
     /**
      * turns a {@link ShipType} with relative positions into a ship with absolute positions. Places the ship at the absolute positions to {@link #field} and returns the ship.
      */
     public Ship placeShip(ShipType ship, PlacementInfo placementInfo) {
-        Collection<Point2D> positions = ship.getPositions().stream().map(point2D -> point2D.getPointWithOffset(placementInfo.getPosition())).collect(Collectors.toList());
-        LOGGER.debug("placeship"+positions);
+        Collection<Point2D> positions = ship.getPositions();
+        LOGGER.log(Level.INFO,"Place ship at "+positions+" for player "+clientId);
         int square_length = getSquareLength(positions);
-        //System.out.println("quadratlänge"+square_length);
         HashBasedTable<Integer, Integer, Point2D> square = createSquare(square_length, positions);
-        //System.out.println("in placeship  square"+square.isEmpty());
         if (checkPositions(square_length, placementInfo.getPosition())){
-            //System.out.println("In if in placeShip");
             square = rotate(square_length, placementInfo.getRotation().ordinal(), square);
-            //System.out.println("in placeship  square"+square.isEmpty());
             return fillField(placementInfo.getPosition(), square, square_length, ship);
         } else{
             return null;
@@ -70,13 +68,13 @@ public class Field {
         int maxY=0, minY = 1000000000;
         for (Iterator it = positions.iterator(); it.hasNext(); ){
             Point2D point = (Point2D) it.next();
+            maxX = Math.max(maxX, point.getX());
             minX = Math.min(minX, point.getX());
             minY = Math.min(minY, point.getY());
-            maxX = Math.max(maxX, point.getX());
             maxY = Math.max(maxY, point.getY());
         }
-        LOGGER.debug("max"+maxX+""+ maxY);
-        //Ship to (0,0)
+        LOGGER.log(Level.INFO,"max"+maxX+""+ maxY);
+        //transform points of ship to (0,0)
         for (Point2D p: positions){
             p.setX(p.getX()-minX);
             p.setY(p.getY()-minY);
@@ -90,9 +88,9 @@ public class Field {
      * creates square around ship
      * @return HashBasedTable for each position (x,y,Point2D)-ship or (x,y,null)-no ship
      **/
-    private  HashBasedTable<Integer, Integer, Point2D> createSquare(int length, Collection<Point2D> positions){
+    private HashBasedTable<Integer, Integer, Point2D> createSquare(int length, Collection<Point2D> positions){
         HashBasedTable<Integer, Integer, Point2D> table = HashBasedTable.create();
-        //System.out.println("in createsquare  square länge "+ length);
+        //System.out.println("in createsquare  square länge"+ length);
         for (int x=0; x<length+1; x++){
             for (int y=0; y<length+1;y++){
                 //boolean found = false;
@@ -106,7 +104,7 @@ public class Field {
             }
         }
         //System.out.println("in createsquare  square"+table.isEmpty());
-        LOGGER.debug("createquare"+table);
+        LOGGER.log(Level.INFO, "createquare"+table);
         return table;
     }
 
@@ -114,9 +112,7 @@ public class Field {
      * checks if the ship fit at this position in the field
      */
     private boolean checkPositions(int length, Point2D point){
-        //System.out.println("in checkPositions"+"x:"+point.getX()+"länge"+length+"breite"+width+"y"+ point.getY()+"länge"+length);
-        //System.out.println((point.getX()+length<=width && point.getY()-length>=0));
-        return (point.getX()+length<=width && point.getY()-length>=0);
+        return point.getX()>= 0 && point.getY() >= 0 && point.getX()+length< width && point.getY()+length < height;
     }
 
     /**
@@ -128,11 +124,10 @@ public class Field {
      */
     private HashBasedTable<Integer, Integer, Point2D> rotate (int length, int rotation, HashBasedTable<Integer, Integer, Point2D> table){
         HashBasedTable<Integer, Integer, Point2D> tableRotated = HashBasedTable.create(table);
-        LOGGER.debug("rotate table");
+        LOGGER.log(Level.INFO,"rotate table");
         for (int r = rotation; r>0; r--){
             tableRotated = rotate90(length, tableRotated);
         }
-        LOGGER.debug("finish rotate");
         return tableRotated;
     }
 
@@ -151,7 +146,7 @@ public class Field {
                     tableRotated.put(j, totalColumn-i, table.get(i,j));
                 }}
         }
-        LOGGER.debug("rotated"+tableRotated);
+        LOGGER.log(Level.INFO,"rotated"+tableRotated);
         return tableRotated;
     }
 
@@ -164,7 +159,7 @@ public class Field {
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
         Ship ship = new Ship(type, table.values());
         //System.out.println("in fillField");
-        LOGGER.debug("in fillField");
+        LOGGER.log(Level. INFO,"in fillField");
         //System.out.println("in fillField2+table"+table.isEmpty());
         for (int x=0; x<length;x++) {
             for (int y = 0; y < length; y++) {
@@ -176,7 +171,7 @@ public class Field {
                 }
             }
         }
-        LOGGER.debug("end fillfield"+field);
+        LOGGER.log(Level.INFO,"end fillfield"+field);
         return ship;
     }
 
