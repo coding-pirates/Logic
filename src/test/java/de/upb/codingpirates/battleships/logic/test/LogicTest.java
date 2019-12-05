@@ -51,10 +51,30 @@ public class LogicTest {
         Field field3 = new Field(config.getHeight(), config.getWidth(),3);
 
         PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2,5), Rotation.COUNTERCLOCKWISE_90);
-        field1.placeShip(shipType1, placementInfo1);
+        Ship ship1 = field1.placeShip(shipType1, placementInfo1);
         System.out.println("field is empty "+field1.getField().isEmpty());
         System.out.println(field1.getField().toString());
+
+        Shot shot1 = new Shot(1, point2ds.get(7,8));
+        Shot shot2 = new Shot(1,new Point2D(15,46));
+        Shot shot3 = new Shot(1, point2ds.get(2,5));
+        Shot shot4 = new Shot(1, point2ds.get(3,5));
+        Shot shot5 = new Shot(1, point2ds.get(4,4));
+        Shot shot6 = new Shot(1, point2ds.get(4,5));
+
+        System.out.println(field1.hit(shot1).getHitType());
+        System.out.println(field1.hit(shot2).getHitType());
+        System.out.println(field1.hit(shot3).getHitType());
+
+        ship1.hit(point2ds.get(2,5));
+        System.out.println(field1.hit(shot4).getHitType());
+        ship1.hit(point2ds.get(3,5));
+        System.out.println(field1.hit(shot5).getHitType());
+        ship1.hit(point2ds.get(4,4));
+        ship1.hit(point2ds.get(4,5));
+        System.out.println(field1.hit(shot6).getHitType());
     }
+
 
     @Test
     public void test(){
