@@ -197,10 +197,7 @@ public class Field {
      * place the ship in the field, at the correct positions
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
-        LOGGER.log(Level.INFO,"Fill ship to field");
-        table.columnMap().forEach((x,map)-> map.replaceAll((y, point1)-> point.getPointWithOffset(x,y)));
         Ship ship = new Ship(type, table.values());
-        System.out.println("in fillField"+point.toString());
         LOGGER.log(Level. INFO,"in fillField");
         //System.out.println("in fillField2+table"+table.isEmpty());
         if (table.get(0,0)!= null) {
@@ -248,7 +245,6 @@ public class Field {
             }
         }
         LOGGER.log(Level.INFO,"end fillfield"+field);
-        table.values().forEach(point1 -> field.put(point1.getX(),point1.getY(),ship));
         return ship;
     }
 
