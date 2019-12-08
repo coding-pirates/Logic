@@ -102,12 +102,20 @@ public class Configuration {
         return shotCount;
     }
 
-    public int getHitPoints() {
+    public int getHitPointsRaw() {
         return hitPoints;
     }
 
-    public int getSunkPoints() {
+    public int getHitPoints(){
+        return hitPoints * 4;
+    }
+
+    public int getSunkPointsRaw() {
         return sunkPoints;
+    }
+
+    public int getSunkPoints(){
+        return sunkPoints * 4;
     }
 
     public long getRoundTime() {
