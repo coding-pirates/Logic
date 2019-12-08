@@ -1,5 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
+import java.util.Objects;
+
 /**
  * Represents a point in a two-dimensional coordinate system
  *
@@ -43,10 +45,16 @@ public class Point2D {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof Point2D){
-            return ((Point2D)obj).x == x && ((Point2D)obj).y == y;
-        }
-        return false;
+    public boolean equals(final Object object) {
+        return (object instanceof Point2D) && equals((Point2D) object);
+    }
+
+    public boolean equals(final Point2D other) {
+        return (other != null) && (getX() == other.getX()) && (getY() == other.getY());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
