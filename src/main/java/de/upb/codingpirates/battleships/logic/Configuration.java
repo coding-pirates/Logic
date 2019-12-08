@@ -81,11 +81,6 @@ public class Configuration {
         this.penaltyKind = penaltyType;
     }
 
-    @Nonnull
-    public Map<Integer, ShipType> getShipTypes() {
-        return ImmutableMap.copyOf(ships);
-    }
-
     public int getMaxPlayerCount() {
         return maxPlayerCount;
     }
