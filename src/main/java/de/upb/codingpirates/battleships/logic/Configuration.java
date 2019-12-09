@@ -1,6 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import javax.annotation.Nonnull;
@@ -12,7 +13,7 @@ import java.util.Map;
  * @author Interdoc committee & Paul Becker
  */
 public class Configuration {
-    public static final Configuration DEFAULT = new Configuration(0, 0, 0, 0, 0, 0, 0, 0, Maps.newHashMap(), 1, PenaltyType.POINTLOSS);
+    public static final Configuration DEFAULT = new Configuration(4, 10, 10, 4, 1, 1, 10000, 1000, new HashMap<Integer, ShipType>(){{put(0,new ShipType(Lists.newArrayList(new Point2D(3,3),new Point2D(4,3),new Point2D(3,4))));}}, 1, PenaltyType.POINTLOSS);
 
     /**
      * max player possible in one game
@@ -80,11 +81,6 @@ public class Configuration {
         this.penaltyKind = penaltyType;
     }
 
-    @Nonnull
-    public Map<Integer, ShipType> getShipTypes() {
-        return ImmutableMap.copyOf(ships);
-    }
-
     public int getMaxPlayerCount() {
         return maxPlayerCount;
     }
@@ -101,12 +97,20 @@ public class Configuration {
         return shotCount;
     }
 
-    public int getHitPoints() {
+    public int getHitPointsRaw() {
         return hitPoints;
     }
 
-    public int getSunkPoints() {
+    public int getHitPoints(){
+        return hitPoints * 4;
+    }
+
+    public int getSunkPointsRaw() {
         return sunkPoints;
+    }
+
+    public int getSunkPoints(){
+        return sunkPoints * 4;
     }
 
     public long getRoundTime() {

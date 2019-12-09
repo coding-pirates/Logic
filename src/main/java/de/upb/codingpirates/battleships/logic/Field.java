@@ -2,16 +2,16 @@ package de.upb.codingpirates.battleships.logic;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Field {
-    private static final Logger LOGGER = Logger.getLogger(Field.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private int height;
     private int width;
@@ -26,12 +26,12 @@ public class Field {
     }
 
     /**
-     * if ship exists at point the ship gets hit and removed from {@link #field}
+     * if ship exists at shot the ship gets hit and removed from {@link #field}
      *
-     * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the point is not in the field
+     * @return {@link HitType#NONE} if no ship exists, {@link HitType#HIT} if a ship got hit, {@link HitType#SUNK} if a ship got hit and not remaining parts are left, {@link HitType#FAIL} if the shot is not in the field
      */
     public ShotHit hit(Shot shot) {
-        LOGGER.log(Level.INFO,"Shot at "+shot.getTargetField()+", for clientId "+shot.getClientId());
+        LOGGER.info("Shot at {}, for clientId {}",shot.getTargetField(),shot.getClientId());
         if (shot.getTargetField().getX() > width || shot.getTargetField().getY() > height)
             return new ShotHit(HitType.FAIL);
         if (field.contains(shot.getTargetField().getX(), shot.getTargetField().getY())){
@@ -115,7 +115,7 @@ public class Field {
             minRow = Math.min(minRow, point.getY());
             maxRow = Math.max(maxRow, point.getY());
         }
-        LOGGER.log(Level.INFO,"max"+maxColumn+""+ maxRow);
+        LOGGER.info("Max ship size: {}, {}",maxColumn,maxRow);
         //transform points of ship to (0,0)
         for (Point2D p: positions){
             p.setX(p.getX()-minColumn);
@@ -144,7 +144,7 @@ public class Field {
             }
         }
         //System.out.println("in createsquare  square"+table.isEmpty());
-        LOGGER.log(Level.INFO, "createquare"+table);
+        LOGGER.info("createquare {}",table);
         return table;
     }
 
@@ -164,7 +164,7 @@ public class Field {
      */
     private HashBasedTable<Integer, Integer, Point2D> rotate (int length, int rotation, HashBasedTable<Integer, Integer, Point2D> table){
         HashBasedTable<Integer, Integer, Point2D> tableRotated = HashBasedTable.create(table);
-        LOGGER.log(Level.INFO,"rotate table");
+        LOGGER.info("rotate table");
         for (int r = rotation; r>0; r--){
             tableRotated = rotate90(length, tableRotated);
         }
@@ -186,7 +186,7 @@ public class Field {
                     tableRotated.put(i, length-1-j, table.get(j,i));
                 }}
         }
-        LOGGER.log(Level.INFO,"rotated"+tableRotated);
+        LOGGER.info("rotated {}",tableRotated);
         return tableRotated;
     }
 
@@ -198,7 +198,7 @@ public class Field {
      */
     private Ship fillField(Point2D point, HashBasedTable<Integer, Integer, Point2D> table, int length, ShipType type){
         Ship ship = new Ship(type, table.values());
-        LOGGER.log(Level. INFO,"in fillField");
+        LOGGER.info("Fill ship to field");
         //System.out.println("in fillField2+table"+table.isEmpty());
         if (table.get(0,0)!= null) {
             for (int row = 0; row < length; row++) {
@@ -244,7 +244,7 @@ public class Field {
                 }
             }
         }
-        LOGGER.log(Level.INFO,"end fillfield"+field);
+        LOGGER.info("end fillfield {}",field);
         return ship;
     }
 

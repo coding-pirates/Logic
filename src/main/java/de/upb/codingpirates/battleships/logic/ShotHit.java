@@ -28,4 +28,3 @@ public class ShotHit {
         return hitType;
     }
 }
-

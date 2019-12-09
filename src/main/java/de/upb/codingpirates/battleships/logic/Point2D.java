@@ -50,4 +50,12 @@ public class Point2D {
     public String toString() {
         return "[" + this.x + ", "+ this.y + "]";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Point2D){
+            return ((Point2D)obj).x == x && ((Point2D)obj).y == y;
+        }
+        return false;
+    }
 }

@@ -35,4 +35,13 @@ public class Shot {
     public Point2D getTargetField() {
         return targetField;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Shot){
+            return ((Shot)obj).clientId == clientId && ((Shot)obj).targetField == targetField;
+
+        }
+        return false;
+    }
 }
