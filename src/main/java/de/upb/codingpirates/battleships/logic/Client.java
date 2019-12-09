@@ -24,17 +24,18 @@ public class Client {
         this.name = name;
     }
 
+    /**
+     * @return Id of the {@link Client}
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return Name of the {@link Client}
+     */
     @Nonnull
     public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString(){
         return name;
     }
 }

@@ -1,6 +1,8 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
+ * ErrorType for client related requests
+ *
  * @author Interdoc committee & Paul Becker
  */
 public enum ErrorType {
@@ -22,5 +24,5 @@ public enum ErrorType {
      * Occurs when the JSON string is syntactically correct, but it is not
      * Message class can be assigned.
      */
-    BAD_MESSAGE;
+    BAD_MESSAGE
 }

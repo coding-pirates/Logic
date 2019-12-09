@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
- * Represents a ship.
+ * Represents the form of a {@link Ship}
  *
  * @author Interdoc committee & Paul Becker
  */
@@ -21,6 +21,9 @@ public class ShipType {
         this.positions = positions;
     }
 
+    /**
+     * @return {@link #positions}
+     */
     @Nonnull
     public Collection<Point2D> getPositions() {
         return positions;

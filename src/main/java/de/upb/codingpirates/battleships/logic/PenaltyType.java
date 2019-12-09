@@ -1,6 +1,8 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
+ * Represents the penalty type of a irregularity
+ *
  * @author Interdoc committee & Paul Becker
  */
 public enum PenaltyType {
@@ -15,5 +17,5 @@ public enum PenaltyType {
     /**
      * point deduction
      */
-    POINTLOSS;
+    POINTLOSS
 }

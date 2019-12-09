@@ -2,6 +2,9 @@ package de.upb.codingpirates.battleships.logic;
 
 import java.util.Collection;
 
+/**
+ * Represents a ship on a {@link Field}
+ */
 public class Ship {
 
     private ShipType shipType;
@@ -15,13 +18,16 @@ public class Ship {
     /**
      * removes point from {@link #leftShipParts}
      *
-     * @return if {@link #leftShipParts} is empty returns true
+     * @return if {@link #leftShipParts} is empty returns {@code true}
      */
     public boolean hit(Point2D point) {
         this.leftShipParts.remove(point);
         return leftShipParts.isEmpty();
     }
 
+    /**
+     * @return {@link #shipType }
+     */
     public ShipType getShipType() {
         return shipType;
     }

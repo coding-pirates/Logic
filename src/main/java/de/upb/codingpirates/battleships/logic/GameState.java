@@ -1,6 +1,8 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
+ * State in which the overall game is in
+ *
  * @author Interdoc committee & Paul Becker
  */
 public enum GameState {
@@ -20,5 +22,5 @@ public enum GameState {
     /**
      * Finished game
      */
-    FINISHED;
+    FINISHED
 }

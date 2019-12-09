@@ -27,10 +27,16 @@ public class Shot {
         this.targetField = targetField;
     }
 
+    /**
+     * @return {@link #clientId}
+     */
     public int getClientId() {
         return clientId;
     }
 
+    /**
+     * @return {@link #targetField}
+     */
     @Nonnull
     public Point2D getTargetField() {
         return targetField;
@@ -38,8 +44,8 @@ public class Shot {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Shot){
-            return ((Shot)obj).clientId == clientId && ((Shot)obj).targetField == targetField;
+        if (obj instanceof Shot) {
+            return ((Shot) obj).clientId == clientId && ((Shot) obj).targetField == targetField;
 
         }
         return false;

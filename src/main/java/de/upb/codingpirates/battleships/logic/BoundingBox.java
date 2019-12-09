@@ -1,5 +1,8 @@
 package de.upb.codingpirates.battleships.logic;
 
+/**
+ * @author Paul Becker
+ */
 public class BoundingBox {
     private final int x;
     private final int y;
@@ -17,7 +20,7 @@ public class BoundingBox {
         return y;
     }
 
-    public int getSize(){
-        return x*y;
+    public int getSize() {
+        return x * y;
     }
 }

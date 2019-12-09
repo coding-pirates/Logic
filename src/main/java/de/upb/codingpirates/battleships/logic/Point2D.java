@@ -11,15 +11,6 @@ public class Point2D {
      * x-coordinate of the point
      */
     private int x;
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     /**
      * y-coordinate of the point
      */
@@ -38,23 +29,23 @@ public class Point2D {
         return y;
     }
 
-    public Point2D getPointWithOffset(int x, int y){
+    public Point2D getPointWithOffset(int x, int y) {
         return new Point2D(this.x + x, this.y + y);
     }
 
-    public Point2D getPointWithOffset(Point2D point){
+    public Point2D getPointWithOffset(Point2D point) {
         return new Point2D(this.x + point.x, this.y + point.y);
     }
 
     @Override
     public String toString() {
-        return "[" + this.x + ", "+ this.y + "]";
+        return "[" + this.x + ", " + this.y + "]";
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Point2D){
-            return ((Point2D)obj).x == x && ((Point2D)obj).y == y;
+        if (obj instanceof Point2D) {
+            return ((Point2D) obj).x == x && ((Point2D) obj).y == y;
         }
         return false;
     }
