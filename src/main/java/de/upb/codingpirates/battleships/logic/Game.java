@@ -2,49 +2,61 @@ package de.upb.codingpirates.battleships.logic;
 
 import javax.annotation.Nonnull;
 
-/**
- * Represents a game.
+import javafx.beans.property.*;
+
+/*
+ * Some features of this class are realized via the various Property<T> implementations located inside the
+ * javafx.beans.property package instead of the usual getter and setter approach with a backing field.
  *
- * @author Interdoc committee & Paul Becker
+ * This is the case to allow data binding from the UI (e.g. for TableViews).
  */
-public class Game {
+/**
+ * Represents a single game.
+ *
+ * @author Interdoc committee
+ * @author Paul Becker
+ * @author Andre Blanke
+ */
+public final class Game {
 
     /**
-     * Is the name of the game
+     * The unique ID of this {@code Game}.
+     */
+    private int id;
+
+    /**
+     * The name of this {@code Game} set by the host at creation time.
      */
     @Nonnull
     private String name;
+
     /**
-     * Is the unique ID of the game
-     */
-    private int id;
-    /**
-     * Contains the number of currently registered
-     * player
-     */
-    private int currentPlayerCount;
-    /**
-     * Contains the status of the game
-     */
-    @Nonnull
-    private GameState state;
-    /**
-     * Contains the configuration of the game
+     * Contains the {@link Configuration} associated with this {@code Game}.
      */
     @Nonnull
     private Configuration config;
-    /**
-     * Indicates whether the game belongs to a tournament
-     */
-    private boolean tournament;
 
-    public Game(@Nonnull String name, int id, @Nonnull GameState state, @Nonnull Configuration config, boolean tournament) {
-        this.name = name;
-        this.id = id;
-        this.currentPlayerCount = 0;
-        this.state = state;
-        this.config = config;
-        this.tournament = tournament;
+    /**
+     * Indicates whether the game belongs to a tournament.
+     */
+    private boolean ownedByTournament;
+
+    public Game(
+            final int id,
+            @Nonnull final String        name,
+            @Nonnull final GameState     state,
+            @Nonnull final Configuration config,
+            final boolean ownedByTournament) {
+        this.name              = name;
+        this.id                = id;
+        this.config            = config;
+        this.ownedByTournament = ownedByTournament;
+
+        setState(state);
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Nonnull
@@ -52,47 +64,74 @@ public class Game {
         return name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getCurrentPlayerCount() {
-        return currentPlayerCount;
-    }
-
-    /**
-     * increases the {@link #currentPlayerCount}
-     *
-     * @return new {@link #currentPlayerCount}
-     */
-    public int addPlayer() {
-        return currentPlayerCount = Math.max(0, ++currentPlayerCount);
-    }
-
-    /**
-     * decreases the {@link #currentPlayerCount}
-     *
-     * @return new {@link #currentPlayerCount}
-     */
-    public int removePlayer() {
-        return currentPlayerCount = Math.max(0, --currentPlayerCount);
-    }
-
-    @Nonnull
-    public GameState getState() {
-        return state;
-    }
-
     @Nonnull
     public Configuration getConfig() {
         return config;
     }
 
-    public boolean ownedByTournament() {
-        return tournament;
+    public boolean isOwnedByTournament() {
+        return ownedByTournament;
     }
 
-    public void setState(@Nonnull GameState state) {
-        this.state = state;
+    // <editor-fold desc="currentPlayerCount">
+    /**
+     * The current amount of {@link Client}s with {@link ClientType#PLAYER} which are part of this {@code Game}.
+     */
+    private final IntegerProperty currentPlayerCount = new SimpleIntegerProperty();
+
+    public int getCurrentPlayerCount() {
+        return currentPlayerCount.get();
+    }
+
+    @SuppressWarnings("unused")
+    public ReadOnlyIntegerProperty currentPlayerCountProperty() {
+        return currentPlayerCount;
+    }
+
+    /**
+     * Increments the current player count of this {@code Game} by one.
+     */
+    public void incrementCurrentPlayerCount() {
+        currentPlayerCount.set(Math.max(0, currentPlayerCount.get() + 1));
+    }
+
+    /**
+     * Decrements the current player count of this {@code Game} by one.
+     */
+    public void decrementCurrentPlayerCount() {
+        currentPlayerCount.set(Math.max(0, currentPlayerCount.get() - 1));
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="state">
+    private final ObjectProperty<GameState> state = new SimpleObjectProperty<>();
+
+    @Nonnull
+    public GameState getState() {
+        return state.get();
+    }
+
+    public void setState(@Nonnull final GameState state) {
+        this.state.set(state);
+    }
+
+    @SuppressWarnings("unused")
+    public ObjectProperty<GameState> stateProperty() {
+        return state;
+    }
+    // </editor-fold>
+
+    /**
+     * "Synthetic" getter acting as a delegate to {@link Configuration#getMaxPlayerCount()}.
+     *
+     * This getter is required because JavaFX's {@code PropertyValueFactory}, which is used to access the property
+     * values of {@code Game} instances for display in a {@code TableView}, is not able to handle nested properties
+     * (e.g. {@code config.maxPlayerCount}).
+     *
+     * @return The maximum amount of players supported by this {@code Game} instance according to its {@link #config}.
+     */
+    @SuppressWarnings("unused")
+    public int getMaxPlayerCount() {
+        return config.getMaxPlayerCount();
     }
 }

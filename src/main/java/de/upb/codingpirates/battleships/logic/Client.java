@@ -1,26 +1,35 @@
 package de.upb.codingpirates.battleships.logic;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 /**
- * Represents a client
+ * Represents a client.
  *
- * @author Interdoc committee & Paul Becker
+ * This class implements {@link Serializable} in order to allow it to be serialized and transferred via the
+ * {@link javafx.scene.input.Clipboard} or any of its subclasses using the {@code application/x-java-serialized-object}
+ * MIME type.
+ *
+ * @author Interdoc committee
+ * @author Paul Becker
+ * @author Andre Blanke
  */
-public class Client {
+public class Client implements Serializable {
 
     /**
-     * A unique ID of a client
+     * The unique ID of this {@code Client}.
      */
     private final int id;
+
     /**
-     * Contains the selected name of a client
+     * The user name selected by this {@code Client}.
      */
     @Nonnull
     private final String name;
 
-    public Client(int id, @Nonnull String name) {
-        this.id = id;
+    public Client(final int id, @Nonnull final String name) {
+        this.id   = id;
         this.name = name;
     }
 
