@@ -15,5 +15,5 @@ public enum PenaltyType {
     /**
      * point deduction
      */
-    POINTLOSS;
+    POINTLOSS
 }

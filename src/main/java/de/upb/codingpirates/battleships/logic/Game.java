@@ -83,6 +83,10 @@ public class Game {
         return state;
     }
 
+    public void setState(@Nonnull GameState state) {
+        this.state = state;
+    }
+
     @Nonnull
     public Configuration getConfig() {
         return config;
@@ -90,9 +94,5 @@ public class Game {
 
     public boolean ownedByTournament() {
         return tournament;
-    }
-
-    public void setState(@Nonnull GameState state) {
-        this.state = state;
     }
 }
