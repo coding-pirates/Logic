@@ -89,7 +89,6 @@ public class Field {
             LOGGER.debug("in checkPoints {}",newTable);
             return newTable;
         } else if (table.row(0).isEmpty()) {
-            System.out.println(table.row(0).toString());
             for (int row = 0; row < length + 1; row++) {
                 for (int col = 0; col < length + 1; col++) {
                     if (table.get(row, col) != null) {
@@ -109,7 +108,7 @@ public class Field {
     /**
      * @param positions Collection with points of one ship
      * @return int length für square
-     */
+     **/
     private int getSquareLength(List<Point2D> positions) {
         int maxColumn = 0, minColumn = Integer.MAX_VALUE;
         int maxRow = 0, minRow = Integer.MAX_VALUE;
@@ -119,13 +118,15 @@ public class Field {
             minRow = Math.min(minRow, point.getY());
             maxRow = Math.max(maxRow, point.getY());
         }
-        LOGGER.debug("Max ship size: {}, {}", maxColumn, maxRow);
+        LOGGER.debug("Max ship size: {}, {}", maxColumn+1, maxRow+1);
         //transform points of ship to (0,0)
         int finalMinColumn = minColumn;
         int finalMinRow = minRow;
-        positions.replaceAll(point2D -> point2D.getPointWithOffset(point2D.getX() - finalMinColumn, point2D.getY() - finalMinRow));
-        return Math.max(maxColumn - minColumn, maxRow - minRow) + 1; //+1 for the Element with index 0
+        positions.replaceAll(point2D -> point2D.getPointWithOffset( -finalMinColumn, -finalMinRow));
+        LOGGER.debug("positions_replaced"+positions);
+        return Math.max(maxColumn - minColumn, maxRow - minRow)+1; //+1 for the Element with index 0
     }
+
 
     /**
      * @param length    length of the square
@@ -135,7 +136,7 @@ public class Field {
      **/
     private HashBasedTable<Integer, Integer, Point2D> createSquare(int length, Collection<Point2D> positions) {
         HashBasedTable<Integer, Integer, Point2D> table = HashBasedTable.create();
-        //System.out.println("in createsquare  square länge"+ length);
+        LOGGER.debug("in createsquare  square länge"+ length);
         for (int row = 0; row < length + 1; row++) {
             for (int col = 0; col < length + 1; col++) {
                 for (Point2D p : positions) {
@@ -151,6 +152,7 @@ public class Field {
         LOGGER.info("createquare {}", table);
         return table;
     }
+
 
     /**
      * checks if the ship fit at this position in the field
@@ -229,11 +231,12 @@ public class Field {
                     }
                 }
             }
-            System.out.println(movedTable.toString());
             for (int r = 0; r < length; r++) {
-                int minKeyRows = Collections.min(movedTable.row(r).keySet());
-                //LOGGER.debug(minKeyRows);
-                //LOGGER.debug("in movedTable1 {} row {}",movedTable.row(r).keySet(),r);
+                int minKeyRows=0;
+                if (!movedTable.row(r).keySet().isEmpty()) {
+                    minKeyRows = Collections.min(movedTable.row(r).keySet());
+                }
+                LOGGER.debug("in movedTable1 {} row {}",movedTable.row(r).keySet(),r);
                 while (minKeyRows < 0) {
                     //LOGGER.debug("in movedTable {}",minKeyRows);
                     field.put(point.getX() + r, point.getY() + minKeyRows, ship);
