@@ -9,6 +9,9 @@ import javafx.beans.property.*;
  * javafx.beans.property package instead of the usual getter and setter approach with a backing field.
  *
  * This is the case to allow data binding from the UI (e.g. for TableViews).
+ *
+ * The Property<T> instances used inside this class are marked as transient to prevent Gson from trying to
+ * (de-)serialize them.
  */
 /**
  * Represents a single game.
@@ -77,13 +80,12 @@ public final class Game {
     /**
      * The current amount of {@link Client}s with {@link ClientType#PLAYER} which are part of this {@code Game}.
      */
-    private final IntegerProperty currentPlayerCount = new SimpleIntegerProperty();
+    private final transient IntegerProperty currentPlayerCount = new SimpleIntegerProperty();
 
-    public int getCurrentPlayerCount() {
-        return currentPlayerCount.get();
+    public void setCurrentPlayerCount(final int currentPlayerCount) {
+        this.currentPlayerCount.set(currentPlayerCount);
     }
 
-    @SuppressWarnings("unused")
     public ReadOnlyIntegerProperty currentPlayerCountProperty() {
         return currentPlayerCount;
     }
@@ -104,7 +106,7 @@ public final class Game {
     // </editor-fold>
 
     // <editor-fold desc="state">
-    private final ObjectProperty<GameState> state = new SimpleObjectProperty<>();
+    private final transient ObjectProperty<GameState> state = new SimpleObjectProperty<>();
 
     @Nonnull
     public GameState getState() {
@@ -115,7 +117,6 @@ public final class Game {
         this.state.set(state);
     }
 
-    @SuppressWarnings("unused")
     public ObjectProperty<GameState> stateProperty() {
         return state;
     }
