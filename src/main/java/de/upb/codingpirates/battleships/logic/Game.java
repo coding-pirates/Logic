@@ -3,11 +3,6 @@ package de.upb.codingpirates.battleships.logic;
 import javax.annotation.Nonnull;
 
 /**
- * Represents a game.
- *
- * @author Interdoc committee & Paul Becker
- */
-/**
  * Represents a single game.
  *
  * @author Interdoc committee
@@ -32,11 +27,13 @@ public final class Game {
      * player
      */
     private int currentPlayerCount;
+
     /**
      * Contains the status of the game
      */
     @Nonnull
     private GameState state;
+
     /**
      * Contains the {@link Configuration} associated with this {@code Game}.
      */
@@ -56,10 +53,9 @@ public final class Game {
             final boolean ownedByTournament) {
         this.name              = name;
         this.id                = id;
+        this.state             = state;
         this.config            = config;
         this.ownedByTournament = ownedByTournament;
-
-        setState(state);
     }
 
     public int getId() {
@@ -84,18 +80,10 @@ public final class Game {
         return currentPlayerCount;
     }
 
-    /**
-     * Increments the current player count of this {@code Game} by one.
-     */
-    public void incrementCurrentPlayerCount() {
-        currentPlayerCount.set(Math.max(0, currentPlayerCount.get() + 1));
-    }
-
-    /**
-     * Decrements the current player count of this {@code Game} by one.
-     */
-    public void decrementCurrentPlayerCount() {
-        currentPlayerCount.set(Math.max(0, currentPlayerCount.get() - 1));
+    public void setCurrentPlayerCount(final int currentPlayerCount) {
+        if (currentPlayerCount < 0)
+            throw new IllegalArgumentException("currentPlayerCount cannot be less than zero.");
+        this.currentPlayerCount = currentPlayerCount;
     }
 
     @Nonnull
@@ -103,7 +91,7 @@ public final class Game {
         return state;
     }
 
-    public void setState(@Nonnull GameState state) {
+    public void setState(@Nonnull final GameState state) {
         this.state = state;
     }
 }
