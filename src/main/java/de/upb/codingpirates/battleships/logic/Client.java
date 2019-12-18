@@ -43,7 +43,7 @@ public class Client implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 }

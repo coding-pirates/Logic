@@ -20,5 +20,5 @@ public enum GameState {
     /**
      * Finished game
      */
-    FINISHED;
+    FINISHED
 }

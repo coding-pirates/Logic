@@ -17,7 +17,7 @@ public class BoundingBox {
         return y;
     }
 
-    public int getSize(){
-        return x*y;
+    public int getSize() {
+        return x * y;
     }
 }

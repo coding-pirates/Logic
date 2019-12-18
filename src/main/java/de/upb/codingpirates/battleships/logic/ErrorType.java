@@ -22,5 +22,5 @@ public enum ErrorType {
      * Occurs when the JSON string is syntactically correct, but it is not
      * Message class can be assigned.
      */
-    BAD_MESSAGE;
+    BAD_MESSAGE
 }

@@ -2,16 +2,10 @@ package de.upb.codingpirates.battleships.logic;
 
 import javax.annotation.Nonnull;
 
-import javafx.beans.property.*;
-
-/*
- * Some features of this class are realized via the various Property<T> implementations located inside the
- * javafx.beans.property package instead of the usual getter and setter approach with a backing field.
+/**
+ * Represents a game.
  *
- * This is the case to allow data binding from the UI (e.g. for TableViews).
- *
- * The Property<T> instances used inside this class are marked as transient to prevent Gson from trying to
- * (de-)serialize them.
+ * @author Interdoc committee & Paul Becker
  */
 /**
  * Represents a single game.
@@ -23,16 +17,26 @@ import javafx.beans.property.*;
 public final class Game {
 
     /**
-     * The unique ID of this {@code Game}.
-     */
-    private int id;
-
-    /**
      * The name of this {@code Game} set by the host at creation time.
      */
     @Nonnull
     private String name;
 
+    /**
+     * The unique ID of this {@code Game}.
+     */
+    private int id;
+
+    /**
+     * Contains the number of currently registered
+     * player
+     */
+    private int currentPlayerCount;
+    /**
+     * Contains the status of the game
+     */
+    @Nonnull
+    private GameState state;
     /**
      * Contains the {@link Configuration} associated with this {@code Game}.
      */
@@ -76,17 +80,7 @@ public final class Game {
         return ownedByTournament;
     }
 
-    // <editor-fold desc="currentPlayerCount">
-    /**
-     * The current amount of {@link Client}s with {@link ClientType#PLAYER} which are part of this {@code Game}.
-     */
-    private final transient IntegerProperty currentPlayerCount = new SimpleIntegerProperty();
-
-    public void setCurrentPlayerCount(final int currentPlayerCount) {
-        this.currentPlayerCount.set(currentPlayerCount);
-    }
-
-    public ReadOnlyIntegerProperty currentPlayerCountProperty() {
+    public int getCurrentPlayerCount() {
         return currentPlayerCount;
     }
 
@@ -103,36 +97,13 @@ public final class Game {
     public void decrementCurrentPlayerCount() {
         currentPlayerCount.set(Math.max(0, currentPlayerCount.get() - 1));
     }
-    // </editor-fold>
-
-    // <editor-fold desc="state">
-    private final transient ObjectProperty<GameState> state = new SimpleObjectProperty<>();
 
     @Nonnull
     public GameState getState() {
-        return state.get();
-    }
-
-    public void setState(@Nonnull final GameState state) {
-        this.state.set(state);
-    }
-
-    public ObjectProperty<GameState> stateProperty() {
         return state;
     }
-    // </editor-fold>
 
-    /**
-     * "Synthetic" getter acting as a delegate to {@link Configuration#getMaxPlayerCount()}.
-     *
-     * This getter is required because JavaFX's {@code PropertyValueFactory}, which is used to access the property
-     * values of {@code Game} instances for display in a {@code TableView}, is not able to handle nested properties
-     * (e.g. {@code config.maxPlayerCount}).
-     *
-     * @return The maximum amount of players supported by this {@code Game} instance according to its {@link #config}.
-     */
-    @SuppressWarnings("unused")
-    public int getMaxPlayerCount() {
-        return config.getMaxPlayerCount();
+    public void setState(@Nonnull GameState state) {
+        this.state = state;
     }
 }
