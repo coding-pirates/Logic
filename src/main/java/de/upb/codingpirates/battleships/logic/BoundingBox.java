@@ -10,14 +10,17 @@ public class BoundingBox {
     }
 
     public int getXSize() {
+
         return x;
     }
 
     public int getYSize() {
+
         return y;
     }
 
     public int getSize() {
+
         return x * y;
     }
 }

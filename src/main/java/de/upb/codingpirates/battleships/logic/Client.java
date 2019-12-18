@@ -24,15 +24,27 @@ public class Client {
         this.name = name;
     }
 
+    /**
+     * Return the specific Client ID
+     * @return {@link #id}
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Return the specific name of the client
+     * @return {@link #name}
+     */
     @Nonnull
     public String getName() {
         return name;
     }
 
+    /**
+     * Return the specific name of the client
+     * @return {@link String}
+     */
     @Override
     public String toString() {
         return name;
