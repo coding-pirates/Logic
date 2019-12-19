@@ -43,19 +43,19 @@ public final class Game {
     /**
      * Indicates whether the game belongs to a tournament.
      */
-    private boolean ownedByTournament;
+    private boolean tournament;
 
     public Game(
             final int id,
             @Nonnull final String        name,
             @Nonnull final GameState     state,
             @Nonnull final Configuration config,
-            final boolean ownedByTournament) {
-        this.name              = name;
-        this.id                = id;
-        this.state             = state;
-        this.config            = config;
-        this.ownedByTournament = ownedByTournament;
+            final boolean tournament) {
+        this.name       = name;
+        this.id         = id;
+        this.state      = state;
+        this.config     = config;
+        this.tournament = tournament;
     }
 
     public int getId() {
@@ -72,8 +72,8 @@ public final class Game {
         return config;
     }
 
-    public boolean isOwnedByTournament() {
-        return ownedByTournament;
+    public boolean isTournament() {
+        return tournament;
     }
 
     public int getCurrentPlayerCount() {
