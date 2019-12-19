@@ -49,17 +49,24 @@ public final class Game {
      * Instantiates a new {@code Game} object.
      *
      * @param id The integer responsible for uniquely identifying this {@code Game}.
+     *
      * @param name The name of this {@code Game}, e.g. for display in the user interface.
+     *
+     * @param state The initial {@link GameState} of the {@code Game} instance to be created.
+     *
      * @param config The {@link Configuration} specifying the behaviour of this instance.
+     *
      * @param tournament Whether this {@code Game} is part of a tournament.
      */
     public Game(
             final int id,
             @Nonnull final String        name,
+            @Nonnull final GameState     state,
             @Nonnull final Configuration config,
             final boolean tournament) {
         this.name       = name;
         this.id         = id;
+        this.state      = state;
         this.config     = config;
         this.tournament = tournament;
     }
