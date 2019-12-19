@@ -1,5 +1,24 @@
 package de.upb.codingpirates.battleships.logic;
 
 public enum GameStage {
-    START, SHOTS, VISUALIZATION, PLACESHIPS, FINISHED
+    /**
+     * Start of the game
+     */
+    START,
+    /**
+     * the player could place their shots
+     */
+    SHOTS,
+    /**
+     * the shots are visualized
+     */
+    VISUALIZATION,
+    /**
+     * the player place his/her ships on the field
+     */
+    PLACESHIPS,
+    /**
+     * the game is over
+     */
+    FINISHED
 }

@@ -22,20 +22,39 @@ public class Shot {
     @SerializedName("position")
     private final Point2D targetField;
 
+    /**
+     * Constructor of the class Shot
+     * @param clientId id of the clied, to which this shot belongs to
+     * @param targetField {@link Point2D}, where the shot was placed
+     */
     public Shot(int clientId, @Nonnull Point2D targetField) {
         this.clientId = clientId;
         this.targetField = targetField;
     }
 
+    /**
+     * Return Id of the Client, to which this shot belongs to
+     * @return {@link #clientId}
+     */
     public int getClientId() {
         return clientId;
     }
 
+    /**
+     * Return Point, which is the target of this shot
+     * @return {@link #targetField}
+     */
     @Nonnull
     public Point2D getTargetField() {
         return targetField;
     }
 
+    /**
+     * Compares Client with a given new Client
+     * @param obj client to compare to
+     * @return {@link Boolean #true} if the id of the given an dold client is the same,
+     *         {@link Boolean #false} if the ids are different
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Shot) {

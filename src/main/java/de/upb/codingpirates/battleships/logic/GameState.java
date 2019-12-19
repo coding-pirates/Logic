@@ -6,7 +6,7 @@ package de.upb.codingpirates.battleships.logic;
 public enum GameState {
     /**
      * Planned game to join the player
-     * can
+     * can choose one game
      */
     LOBBY,
     /**
