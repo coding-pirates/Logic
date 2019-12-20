@@ -12,7 +12,7 @@ import java.util.Iterator;
 /**
  * Represents a field of one player
  *
- * @author Interdoc committee & Paul Becker & Carolin Mensendiek
+ * @author Interdoc committee, Paul Becker & Carolin Mensendiek
  */
 public class Field {
     private static final Logger LOGGER = LogManager.getLogger();

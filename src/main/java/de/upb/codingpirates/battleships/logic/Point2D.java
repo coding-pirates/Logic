@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents a point in a two-dimensional coordinate system
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public class Point2D {
 

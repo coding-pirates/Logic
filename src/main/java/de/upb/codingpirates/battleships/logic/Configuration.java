@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Represents the configuration for a game.
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public class Configuration {
     public static final Configuration DEFAULT = new Configuration(4, 10, 10, 4, 1, 1, 10000, 1000, new HashMap<Integer, ShipType>() {

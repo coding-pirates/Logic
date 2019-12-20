@@ -1,7 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public enum ErrorType {
     /**
