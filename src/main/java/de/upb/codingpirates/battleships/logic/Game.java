@@ -95,4 +95,5 @@ public class Game {
     public boolean ownedByTournament() {
         return tournament;
     }
+
 }
