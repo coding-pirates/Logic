@@ -63,4 +63,9 @@ public class Shot {
         }
         return false;
     }
+
+    @Override
+    public String toString(){
+        return "[ClientId: " + this.getClientId() + ", Point: " + this.getTargetField().toString() + "]";
+    }
 }
