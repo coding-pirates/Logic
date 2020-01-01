@@ -1,12 +1,14 @@
 package de.upb.codingpirates.battleships.logic;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
+
+import javax.annotation.Nonnull;
 
 /**
  * Represents a ship.
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee
+ * @author Paul Becker
  */
 public class ShipType {
 
@@ -21,8 +23,7 @@ public class ShipType {
      * Constructor of the class ShipType
      * @param positions collection over all parts of the ship({@link Point2D})
      */
-    public ShipType(@Nonnull Collection<Point2D> positions) {
-
+    public ShipType(@Nonnull final Collection<Point2D> positions) {
         this.positions = positions;
     }
 
@@ -34,5 +35,4 @@ public class ShipType {
     public Collection<Point2D> getPositions() {
         return positions;
     }
-
 }
