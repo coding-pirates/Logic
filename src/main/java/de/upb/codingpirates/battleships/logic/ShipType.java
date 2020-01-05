@@ -1,5 +1,6 @@
 package de.upb.codingpirates.battleships.logic;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
@@ -9,6 +10,7 @@ import javax.annotation.Nonnull;
  *
  * @author Interdoc committee
  * @author Paul Becker
+ * @author Andre Blanke
  */
 public class ShipType {
 
@@ -18,6 +20,10 @@ public class ShipType {
      */
     @Nonnull
     private final Collection<Point2D> positions;
+
+    public ShipType(@Nonnull final Point2D... positions) {
+        this(Arrays.asList(positions));
+    }
 
     /**
      * Constructor of the class ShipType
