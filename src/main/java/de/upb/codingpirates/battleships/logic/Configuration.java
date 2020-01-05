@@ -1,12 +1,12 @@
 package de.upb.codingpirates.battleships.logic;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 
 /**
  * Represents the configuration for a game.
@@ -14,11 +14,22 @@ import java.util.Map;
  * @author Interdoc committee & Paul Becker
  */
 public class Configuration {
-    public static final Configuration DEFAULT = new Configuration(4, 10, 10, 4, 1, 1, 10000, 1000, new HashMap<Integer, ShipType>() {
-        {
-        put(0, new ShipType(Lists.newArrayList(new Point2D(3, 3), new Point2D(4, 3), new Point2D(3, 4))));
+
+    /*
+     * TODO: Consider replacing this public static property with a static method such as getDefault, as Configuration
+     *       objects are mutable.
+     */
+    public static final Configuration DEFAULT;
+
+    static {
+        final Map<Integer, ShipType> shipTypes = new HashMap<>();
+        shipTypes.put(0, new ShipType(Lists.newArrayList(
+            new Point2D(3, 3),
+            new Point2D(4, 3),
+            new Point2D(3, 4)
+        )));
+        DEFAULT = new Configuration(4, 10, 10, 4, 1, 1, 10000, 1000, shipTypes, 1, PenaltyType.POINTLOSS);
     }
-    }, 1, PenaltyType.POINTLOSS);
 
     /**
      * max player possible in one game
