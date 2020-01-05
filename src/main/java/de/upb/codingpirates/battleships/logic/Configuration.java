@@ -1,12 +1,11 @@
 package de.upb.codingpirates.battleships.logic;
 
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 /**
  * Represents the configuration for a game.
@@ -78,33 +77,8 @@ public class Configuration {
     @Nonnull
     private final Map<Integer, ShipType> ships;
 
-    /** @see #getDefault() */
     @Deprecated
-    public static final Configuration DEFAULT = getDefault();
-
-    @Nonnull
-    public static Configuration getDefault() {
-        final Map<Integer, ShipType> shipTypes = new HashMap<>();
-        shipTypes.put(0, new ShipType(Lists.newArrayList(
-                new Point2D(3, 3),
-                new Point2D(4, 3),
-                new Point2D(3, 4)
-        )));
-
-        return new Builder()
-                .maxPlayerCount(4)
-                .width(10)
-                .height(10)
-                .shotCount(4)
-                .hitPoints(1)
-                .sunkPoints(1)
-                .roundTime(10_000)
-                .visualizationTime(1_000)
-                .ships(shipTypes)
-                .penaltyMinusPoints(1)
-                .penaltyKind(PenaltyType.POINTLOSS)
-                .build();
-    }
+    public static final Configuration DEFAULT = new Builder().build();
 
     /**
      * Constructor of the class Configuration
@@ -243,28 +217,38 @@ public class Configuration {
 
     public static final class Builder {
 
-        private int maxPlayerCount;
+        private int maxPlayerCount = 4;
 
-        private int height;
+        private int height = 10;
 
-        private int width;
+        private int width = 10;
 
-        private int shotCount;
+        private int shotCount = 4;
 
-        private int hitPoints;
+        private int hitPoints = 1;
 
-        private int sunkPoints;
+        private int sunkPoints = 1;
 
-        private long roundTime;
+        private long roundTime = 10_000;
 
-        private long visualizationTime;
+        private long visualizationTime = 1_000;
 
-        private int penaltyMinusPoints;
+        private int penaltyMinusPoints = 1;
 
-        private PenaltyType penaltyKind;
+        private PenaltyType penaltyKind = PenaltyType.POINTLOSS;
 
         private Map<Integer, ShipType> ships;
 
+        public Builder() {
+            ships = new IdentityHashMap<>();
+            ships.put(0, new ShipType(
+                new Point2D(3, 3),
+                new Point2D(4, 3),
+                new Point2D(3, 4)
+            ));
+        }
+
+        @Nonnull
         public Configuration build() {
             return new Configuration(
                 maxPlayerCount,
