@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 /**
  * Represents the unique position of a ship.
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public class PlacementInfo {
 

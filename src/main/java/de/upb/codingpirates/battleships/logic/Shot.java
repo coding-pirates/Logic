@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  * Represents a shot.
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public class Shot {
     /**

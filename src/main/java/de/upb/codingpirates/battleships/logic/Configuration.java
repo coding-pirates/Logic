@@ -77,7 +77,6 @@ public class Configuration {
     @Nonnull
     private final Map<Integer, ShipType> ships;
 
-    @Deprecated
     public static final Configuration DEFAULT = new Builder().build();
 
     /**
