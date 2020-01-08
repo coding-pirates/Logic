@@ -37,11 +37,3 @@ test {
         events "passed", "skipped", "failed"
     }
 }
-
-jar{
-    manifest {
-        attributes 'Implementation-Title': 'Battleships Logic',
-                'Implementation-Version': "${project.logic_version}"
-    }
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-}
