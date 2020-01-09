@@ -16,12 +16,18 @@ import java.io.Serializable;
  */
 public class Client extends AbstractClient implements Serializable {
 
+    private boolean dead;
+
     public Client(final int id, @Nonnull final String name) {
         super(id, name);
     }
 
     @Override
     public ClientType getClientType() {
-        return ClientType.PLAYER;
+        return dead ? ClientType.SPECTATOR : ClientType.PLAYER;
+    }
+
+    public void setDead(boolean dead){
+        this.dead = dead;
     }
 }
