@@ -72,6 +72,19 @@ public final class Game {
     }
 
     /**
+     * "Synthetic" getter acting as a delegate to {@link Configuration#getMaxPlayerCount()}.
+     *
+     * This getter is required because JavaFX's {@code PropertyValueFactory}, which is used to access the property
+     * values of {@code Game} instances for display in a {@code TableView}, is not able to handle nested properties
+     * (e.g. {@code config.maxPlayerCount}).
+     *
+     * @return The maximum amount of players supported by this {@code Game} instance according to its {@link #config}.
+     */
+    public int getMaxPlayerCount() {
+        return config.getMaxPlayerCount();
+    }
+
+    /**
      * Returns the unique ID associated with this {@code Game}.
      *
      * @return {@link #id}
