@@ -1,11 +1,10 @@
 package de.upb.codingpirates.battleships.logic;
 
-import java.util.IdentityHashMap;
-import java.util.Map;
+import com.google.common.collect.ImmutableMap;
 
 import javax.annotation.Nonnull;
-
-import com.google.common.collect.ImmutableMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 /**
  * Represents the configuration for a game.
@@ -14,6 +13,7 @@ import com.google.common.collect.ImmutableMap;
  * @author Paul Becker
  */
 public class Configuration {
+
 
     /**
      * max player possible in one game
@@ -31,8 +31,7 @@ public class Configuration {
     private final int width;
 
     /**
-     * Gives the number of possible shots per
-     * Round on
+     * Gives the number of possible shots per Round on
      */
     private final int shotCount;
 
