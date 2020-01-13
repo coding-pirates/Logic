@@ -53,6 +53,10 @@ public abstract class AbstractClient {
         return name;
     }
 
+    @Nonnull
     public abstract ClientType getClientType();
+
+    @Nonnull
+    public abstract ClientType handleClientAs();
 
 }

@@ -22,8 +22,15 @@ public class Client extends AbstractClient implements Serializable {
         super(id, name);
     }
 
+    @Nonnull
     @Override
     public ClientType getClientType() {
+        return ClientType.PLAYER;
+    }
+
+    @Nonnull
+    @Override
+    public ClientType handleClientAs() {
         return dead ? ClientType.SPECTATOR : ClientType.PLAYER;
     }
 
