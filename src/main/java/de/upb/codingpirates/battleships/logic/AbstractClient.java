@@ -1,5 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -9,7 +11,7 @@ import javax.annotation.Nonnull;
  * @author Paul Becker
  * @author Andre Blanke
  */
-public abstract class AbstractClient {
+public abstract class AbstractClient implements Serializable {
 
     /**
      * The unique ID of this {@code Client}.

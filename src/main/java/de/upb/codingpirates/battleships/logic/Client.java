@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author Paul Becker
  * @author Andre Blanke
  */
-public class Client extends AbstractClient implements Serializable {
+public class Client extends AbstractClient {
 
     private boolean dead;
 
