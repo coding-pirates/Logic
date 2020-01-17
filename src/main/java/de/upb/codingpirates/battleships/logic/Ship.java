@@ -12,6 +12,9 @@ public class Ship {
         this.shipType = type;
     }
 
+    public Ship(ShipType shipType) {
+    }
+
     /**
      * removes point from {@link #leftShipParts}
      *
