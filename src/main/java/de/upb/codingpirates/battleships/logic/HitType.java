@@ -1,26 +1,20 @@
 package de.upb.codingpirates.battleships.logic;
 
-/**
- * Represents the result type of a {@link Shot} on a {@link Field}
- *
- * @author Paul Becker
- */
 public enum HitType {
     /**
-     * some sort of failure while trying to hit the field
-     * - hit coordinates not on field
+     * shot has failed
      */
     FAIL,
     /**
-     * the shot hit no ship
+     * nothing was hit - "water"
      */
     NONE,
     /**
-     * the shot hits a ship, but not sink it
+     * one part of the ship was hit - "hit"
      */
     HIT,
     /**
-     * the shot hits a ship, which results in a destroyed ship
+     * all parts of one ship was hit, the whole ship sunk - "sunken"
      */
     SUNK
 }

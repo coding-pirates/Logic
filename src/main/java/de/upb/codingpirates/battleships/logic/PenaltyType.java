@@ -1,9 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
- * Represents the penalty type of a irregularity
- *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public enum PenaltyType {
     /**

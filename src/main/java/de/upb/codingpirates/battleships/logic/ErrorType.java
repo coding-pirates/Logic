@@ -1,9 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
- * ErrorType for client related requests
- *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public enum ErrorType {
     /**

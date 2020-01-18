@@ -3,88 +3,91 @@ package de.upb.codingpirates.battleships.logic;
 import javax.annotation.Nonnull;
 
 /**
- * Represents a game.
+ * Represents a single game.
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee
+ * @author Paul Becker
+ * @author Andre Blanke
  */
-public class Game {
+public final class Game {
 
     /**
-     * Is the name of the game
+     * The name of this {@code Game} set by the host at creation time.
      */
     @Nonnull
     private String name;
+
     /**
-     * Is the unique ID of the game
+     * The unique ID of this {@code Game}.
      */
     private int id;
+
     /**
      * Contains the number of currently registered
      * player
      */
     private int currentPlayerCount;
+
     /**
      * Contains the status of the game
      */
     @Nonnull
     private GameState state;
+
     /**
-     * Contains the configuration of the game
+     * Contains the {@link Configuration} associated with this {@code Game}.
      */
     @Nonnull
     private Configuration config;
+
     /**
-     * Indicates whether the game belongs to a tournament
+     * Indicates whether the game belongs to a tournament.
      */
     private boolean tournament;
 
-    public Game(@Nonnull String name, int id, @Nonnull GameState state, @Nonnull Configuration config, boolean tournament) {
-        this.name = name;
-        this.id = id;
-        this.currentPlayerCount = 0;
-        this.state = state;
-        this.config = config;
+    /**
+     * Instantiates a new {@code Game} object.
+     *
+     * @param id The integer responsible for uniquely identifying this {@code Game}.
+     *
+     * @param name The name of this {@code Game}, e.g. for display in the user interface.
+     *
+     * @param state The initial {@link GameState} of the {@code Game} instance to be created.
+     *
+     * @param config The {@link Configuration} specifying the behaviour of this instance.
+     *
+     * @param tournament Whether this {@code Game} is part of a tournament.
+     */
+    public Game(
+            final int id,
+            @Nonnull final String        name,
+            @Nonnull final GameState     state,
+            @Nonnull final Configuration config,
+            final boolean tournament) {
+        this.name       = name;
+        this.id         = id;
+        this.state      = state;
+        this.config     = config;
         this.tournament = tournament;
     }
 
-    @Nonnull
-    public String getName() {
-        return name;
-    }
-
+    /**
+     * Returns the unique ID associated with this {@code Game}.
+     *
+     * @return {@link #id}
+     */
     public int getId() {
         return id;
     }
 
-    public int getCurrentPlayerCount() {
-        return currentPlayerCount;
-    }
-
     /**
-     * increases the {@link #currentPlayerCount}
+     * Return the name of the {@code Game}, e.g. for display in the user interface.
      *
-     * @return new {@link #currentPlayerCount}
+     * @return {@link #name}
      */
-    public int addPlayer() {
-        return currentPlayerCount = Math.max(0, ++currentPlayerCount);
-    }
-
-    /**
-     * decreases the {@link #currentPlayerCount}
-     *
-     * @return new {@link #currentPlayerCount}
-     */
-    public int removePlayer() {
-        return currentPlayerCount = Math.max(0, --currentPlayerCount);
-    }
-
     @Nonnull
-    public GameState getState() {
-        return state;
-    }
-
-    public void setState(@Nonnull GameState state) {
-        this.state = state;
+    public String getName() {
+        return name;
     }
 
     @Nonnull
@@ -92,7 +95,41 @@ public class Game {
         return config;
     }
 
-    public boolean ownedByTournament() {
+    /**
+     * Returns whether this {@code Game} is part of a tournament.
+     *
+     * @return {@code true} if this {@code Game} is part of a tournament, otherwise {@code false}.
+     */
+    public boolean isTournament() {
         return tournament;
+    }
+
+    /**
+     * Return current amount of players who are playing this game.
+     *
+     * @return {@link #currentPlayerCount}
+     */
+    public int getCurrentPlayerCount() {
+        return currentPlayerCount;
+    }
+
+    public void setCurrentPlayerCount(final int currentPlayerCount) {
+        if (currentPlayerCount < 0)
+            throw new IllegalArgumentException("currentPlayerCount cannot be less than zero.");
+        this.currentPlayerCount = currentPlayerCount;
+    }
+
+    /**
+     * Return status of the {@code Game}.
+     *
+     * @return {@link #state}
+     */
+    @Nonnull
+    public GameState getState() {
+        return state;
+    }
+
+    public void setState(@Nonnull final GameState state) {
+        this.state = state;
     }
 }

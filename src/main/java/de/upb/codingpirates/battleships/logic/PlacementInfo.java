@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 /**
  * Represents the unique position of a ship.
  *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public class PlacementInfo {
 
@@ -22,16 +22,29 @@ public class PlacementInfo {
     @Nonnull
     private Rotation rotation;
 
+    /**
+     * Constructor of the class PlacementInfo
+     * @param position {@link Point2D} lowest, left point, where the ship should be placed at
+     * @param rotation {@link Rotation} how often rotate the ship
+     */
     public PlacementInfo(@Nonnull Point2D position, @Nonnull Rotation rotation) {
         this.position = position;
         this.rotation = rotation;
     }
 
+    /**
+     * Return the point, where the lowest left of the ship should be placed
+     * @return {@link #position}
+     */
     @Nonnull
     public Point2D getPosition() {
         return position;
     }
 
+    /**
+     * return the rotation, how the ship should be placed in the field
+     * @return {@link #rotation}
+     */
     @Nonnull
     public Rotation getRotation() {
         return rotation;

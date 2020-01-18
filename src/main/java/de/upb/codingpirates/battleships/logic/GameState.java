@@ -1,14 +1,12 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
- * State in which the overall game is in
- *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public enum GameState {
     /**
      * Planned game to join the player
-     * can
+     * can choose one game
      */
     LOBBY,
     /**

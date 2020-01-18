@@ -1,17 +1,15 @@
 package de.upb.codingpirates.battleships.logic;
 
 /**
- * Represents the type of a client
- *
- * @author Interdoc committee & Paul Becker
+ * @author Interdoc committee, Paul Becker
  */
 public enum ClientType {
     /**
-     * A Spectator
+     * observer
      */
     SPECTATOR,
     /**
-     * A Player
+     * player
      */
     PLAYER
 }

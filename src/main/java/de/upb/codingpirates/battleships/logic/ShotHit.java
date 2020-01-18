@@ -1,61 +1,65 @@
 package de.upb.codingpirates.battleships.logic;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 /**
- * Represents the result of a hit on a {@link Field}
+ * Represents the action of the shot
  *
- * @author Paul Becker
+ * @author
  */
 public class ShotHit {
 
     /**
-     * The {@link HitType} of the hit
+     * the type of the shot
      */
-    @Nonnull
     private HitType hitType;
     /**
-     * The {@link Ship} if the {@link Shot} hits a @link Ship}
+     * the ship, which was hit by this shot
      */
-    @Nullable
     private Ship ship;
     /**
-     * The {@link Shot} if it hits a {@link Ship}
+     * the shot itself
      */
-    @Nullable
     private Shot shot;
 
-    public ShotHit(@Nonnull HitType hitType) {
+    /**
+     * Constructor of the class ShotHit
+     * @param hitType type of the hit
+     */
+    public ShotHit(HitType hitType) {
         this.hitType = hitType;
     }
 
-    public ShotHit(@Nonnull Ship ship, @Nonnull Shot shot, @Nonnull HitType hitType) {
+    /**
+     * Constructor of the class ShotHit
+     * @param ship ship, which was hit
+     * @param shot shot, itself
+     * @param hitType type of the shot
+     */
+    public ShotHit(Ship ship, Shot shot, HitType hitType) {
         this.ship = ship;
         this.shot = shot;
         this.hitType = hitType;
     }
 
     /**
+     * Return ship, which was hit
      * @return {@link #ship}
      */
-    @Nullable
     public Ship getShip() {
         return ship;
     }
 
     /**
+     * Return shot, which was played
      * @return {@link #shot}
      */
-    @Nullable
     public Shot getShot() {
         return shot;
     }
 
     /**
+     * Return type of the Hit
      * @return {@link #hitType}
      */
-    @Nonnull
     public HitType getHitType() {
         return hitType;
     }
