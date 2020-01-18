@@ -17,6 +17,7 @@ import java.io.Serializable;
 public class Client extends AbstractClient {
 
     private boolean dead;
+    private boolean spectator;
 
     public Client(final int id, @Nonnull final String name) {
         super(id, name);
@@ -28,13 +29,21 @@ public class Client extends AbstractClient {
         return ClientType.PLAYER;
     }
 
+    public boolean isDead() {
+        return dead;
+    }
+
     @Nonnull
     @Override
     public ClientType handleClientAs() {
-        return dead ? ClientType.SPECTATOR : ClientType.PLAYER;
+        return spectator ? ClientType.SPECTATOR : ClientType.PLAYER;
     }
 
     public void setDead(boolean dead){
         this.dead = dead;
+    }
+
+    public void setSpectator(boolean spectator){
+        this.spectator = spectator;
     }
 }
