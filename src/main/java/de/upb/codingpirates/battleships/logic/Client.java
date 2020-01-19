@@ -34,7 +34,7 @@ public class Client extends AbstractClient {
         return dead ? ClientType.SPECTATOR : ClientType.PLAYER;
     }
 
-    public void setDead(boolean dead){
+    public void setDead(boolean dead) {
         this.dead = dead;
     }
 }
