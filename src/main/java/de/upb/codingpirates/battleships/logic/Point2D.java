@@ -74,7 +74,7 @@ public class Point2D {
 
     /**
      * Compares own coordinates with coordinates of given Point
-     * @param obj Point, with which should this point compared with
+     * @param object Point, with which should this point compared with
      * @return {@link Boolean #true} if the points habe equal coordinates,
      * {@link Boolean #false} if the points have different coordinates
      */
