@@ -1,6 +1,6 @@
 package de.upb.codingpirates.battleships.logic;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 /**
  * Represents a point in a two-dimensional coordinate system
@@ -63,32 +63,25 @@ public class Point2D {
         return new Point2D(this.x + point.x, this.y + point.y);
     }
 
-    /**
-     * Return Point coordinates in a String
-     * @return {@link String} of this point
-     */
     @Override
-    public String toString() {
-        return "[" + this.x + ", " + this.y + "]";
-    }
-
-    /**
-     * Compares own coordinates with coordinates of given Point
-     * @param object Point, with which should this point compared with
-     * @return {@link Boolean #true} if the points habe equal coordinates,
-     * {@link Boolean #false} if the points have different coordinates
-     */
-    @Override
-    public boolean equals(final Object object) {
-        return (object instanceof Point2D) && equals((Point2D) object);
-    }
-
-    public boolean equals(final Point2D other) {
-        return (other != null) && (getX() == other.getX()) && (getY() == other.getY());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point2D point2D = (Point2D) o;
+        return x == point2D.x &&
+                y == point2D.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hashCode(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Point2D{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

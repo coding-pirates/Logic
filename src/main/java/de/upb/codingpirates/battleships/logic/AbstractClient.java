@@ -1,8 +1,9 @@
 package de.upb.codingpirates.battleships.logic;
 
-import java.io.Serializable;
+import com.google.common.base.Objects;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 
 /**
  * Represents a client.
@@ -46,19 +47,31 @@ public abstract class AbstractClient implements Serializable {
         return name;
     }
 
-    /**
-     * Return the specific name of the client
-     * @return {@link String}
-     */
-    @Override
-    public String toString() {
-        return name;
-    }
-
     @Nonnull
     public abstract ClientType getClientType();
 
     @Nonnull
     public abstract ClientType handleClientAs();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractClient client = (AbstractClient) o;
+        return id == client.id &&
+                Objects.equal(name, client.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractClient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
