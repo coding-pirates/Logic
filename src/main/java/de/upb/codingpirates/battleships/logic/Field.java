@@ -205,4 +205,14 @@ public class Field {
         table.values().forEach(point1 -> field.put(point1.getX(), point1.getY(), ship));
         return ship;
     }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "height=" + height +
+                ", width=" + width +
+                ", field=" + field +
+                ", clientId=" + clientId +
+                '}';
+    }
 }

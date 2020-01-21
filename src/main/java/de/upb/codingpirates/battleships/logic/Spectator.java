@@ -19,4 +19,5 @@ public class Spectator extends AbstractClient{
     public ClientType handleClientAs() {
         return ClientType.SPECTATOR;
     }
+
 }
