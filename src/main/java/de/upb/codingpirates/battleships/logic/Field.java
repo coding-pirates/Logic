@@ -14,7 +14,7 @@ import java.util.Iterator;
 /**
  * Represents a field of one player
  *
- * @author Interdoc committee, Paul Becker & Carolin Mensendiek
+ * @author Interdoc committee, Paul Becker, Carolin Mensendiek, Leonie Lender
  */
 public class Field {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -27,7 +27,7 @@ public class Field {
      */
     private int width;
     /**
-     * Table with Index of the Row, Index of the Column, Ship
+     * Table with Index of the Column, Index of the Row, Ship
      */
     private Table<Integer, Integer, Ship> field;
     /**
@@ -48,6 +48,10 @@ public class Field {
         this.clientId = clientId;
     }
 
+    /**
+     * Return the table that represents the field
+     * @return {@link #field}
+     */
     public Table<Integer, Integer, Ship> getField() {
         return field;
     }
@@ -76,17 +80,27 @@ public class Field {
     }
 
 
-    public Ship placeShip(ShipType shiptype, PlacementInfo placementInfo) {
+    /**
+     * turns a {@link ShipType} with relative positions into a ship with absolute positions.
+     * Places the ship at the absolute positions to {@link #field} and returns the ship.
+     *
+     * @param shipType ShipType of the ship, which should be placed on this field
+     * @param placementInfo Information about the upper left point to place the ship and the rotation information
+     *
+     * @return {@link Ship} if the ship was placed successfully,
+     *         {@link null} if the ship was not placed successfully
+     **/
+    public Ship placeShip(ShipType shipType, PlacementInfo placementInfo) {
         Rotator rotator = new Rotator();
         ArrayList<Point2D> shipPositions = new ArrayList<>();
-        ArrayList<ArrayList<Point2D>> rotatedShipPositions = rotator.rotateShips((ArrayList<Point2D>)shiptype.getPositions());
+        ArrayList<ArrayList<Point2D>> rotatedShipPositions = rotator.rotateShips((ArrayList<Point2D>)shipType.getPositions());
         if (placementInfo.getRotation() == Rotation.NONE){
             for (Point2D p : rotatedShipPositions.get(0)){
             shipPositions.add(p);
             }
         }
         else if (placementInfo.getRotation() == Rotation.CLOCKWISE_90){
-            for (Point2D p : rotatedShipPositions.get(3)){
+            for (Point2D p : rotatedShipPositions.get(1)){
                 shipPositions.add(p);
             }
         }
@@ -96,7 +110,7 @@ public class Field {
             }
         }
         else if (placementInfo.getRotation() == Rotation.COUNTERCLOCKWISE_90){
-            for (Point2D p : rotatedShipPositions.get(1)){
+            for (Point2D p : rotatedShipPositions.get(3)){
                 shipPositions.add(p);
             }
         }
@@ -104,8 +118,22 @@ public class Field {
         for (Point2D p : shipPositions){
             positionsOnField.add(new Point2D(p.getX()+placementInfo.getPosition().getX(), p.getY()+placementInfo.getPosition().getY()));
         }
-        Ship shipWithPositionsOnField = new Ship(shiptype, positionsOnField);
+
+        //Check if ship fits on the field and place it there if it does
+        if (validatePositions(positionsOnField)){
+        Ship shipWithPositionsOnField = new Ship(shipType, positionsOnField);
         positionsOnField.forEach(x -> field.put(x.getX(),x.getY(),shipWithPositionsOnField));
         return shipWithPositionsOnField;
+        }
+        return null;
+    }
+
+    private boolean validatePositions(ArrayList<Point2D> positions){
+        for (Point2D p : positions){
+            if (p.getX()<0 || p.getX()>width-1 || p.getY()<0 || p.getY()>height-1){
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class LogicTest {
 
     @Test
-    public void test_ship_placement(){
+    public void testShipPlacement(){
 
         //create a shipType
         ArrayList<Point2D> positionsForShipType1 = new ArrayList<>();
@@ -28,39 +28,65 @@ public class LogicTest {
 
         Game game = new Game(1, "Testspiel", GameState.IN_PROGRESS, config, false);
 
+        //create players
         Client player1 = new Client(1, "Player1");
         Client player2 = new Client(2, "Player2");
         Client player3 = new Client(3, "Player3");
+        Client player4 = new Client(4, "Player4");
 
-        Client spectator1 = new Client(1, "Spectator1");
-
-
+        //create fields
         Field field1 = new Field(config.getHeight(), config.getWidth(), 1);
         Field field2 = new Field(config.getHeight(), config.getWidth(), 2);
         Field field3 = new Field(config.getHeight(), config.getWidth(), 3);
+        Field field4 = new Field(config.getHeight(), config.getWidth(), 4);
 
         //create placementInfo
-        PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(10, 3), Rotation.NONE);
-        PlacementInfo placementInfo2 = new PlacementInfo(new Point2D(10, 3), Rotation.CLOCKWISE_90);
-        PlacementInfo placementInfo3 = new PlacementInfo(new Point2D(10, 3), Rotation.CLOCKWISE_180);
-        PlacementInfo placementInfo4 = new PlacementInfo(new Point2D(10, 3), Rotation.COUNTERCLOCKWISE_90);
+        PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2, 5), Rotation.NONE);
+        PlacementInfo placementInfo2 = new PlacementInfo(new Point2D(2, 5), Rotation.CLOCKWISE_90);
+        PlacementInfo placementInfo3 = new PlacementInfo(new Point2D(2, 5), Rotation.CLOCKWISE_180);
+        PlacementInfo placementInfo4 = new PlacementInfo(new Point2D(2, 5), Rotation.COUNTERCLOCKWISE_90);
+        PlacementInfo placementInfo5 = new PlacementInfo(new Point2D(13, 9), Rotation.COUNTERCLOCKWISE_90);
+        PlacementInfo placementInfo6 = new PlacementInfo(new Point2D(20, 30), Rotation.NONE);
 
+        //try placing ship without rotation
         Ship ship1 = field1.placeShip(shipType1, placementInfo1);
-        System.out.println(field1.getField());
-        /*assert(field1.getField().contains(2,5));
-        assert(field1.getField().contains(2,6));
+        assert(field1.getField().contains(2,5));
+        assert(field1.getField().contains(3,5));
         assert(field1.getField().contains(3,6));
-        assert(field1.getField().contains(4,6));*/
+        assert(field1.getField().contains(3,7));
 
+        //try placing ship rotated 90 degrees clockwise
         Ship ship2 = field2.placeShip(shipType1, placementInfo2);
-        System.out.println(field2.getField());
-        /*assert(field2.getField().contains(2,5));
+        assert(field2.getField().contains(4,5));
+        assert(field2.getField().contains(4,6));
+        assert(field2.getField().contains(3,6));
         assert(field2.getField().contains(2,6));
-        assert(field2.getField().contains(2,7));
-        assert(field2.getField().contains());*/
 
+        //try placing ship rotated 180 degrees clockwise
         Ship ship3 = field3.placeShip(shipType1, placementInfo3);
-        System.out.println(field3.getField().toString());
+        assert(field3.getField().contains(3,7));
+        assert(field3.getField().contains(2,7));
+        assert(field3.getField().contains(2,6));
+        assert(field3.getField().contains(2,5));
+
+        //try placing ship rotated 90 degrees counterclockwise
+        Ship ship4 = field4.placeShip(shipType1, placementInfo4);
+        assert(field4.getField().contains(2,6));
+        assert(field4.getField().contains(2,5));
+        assert(field4.getField().contains(3,5));
+        assert(field4.getField().contains(4,5));
+
+        //try placing ship that doesn't fully fit on the field
+        field1.getField().clear();
+        Ship ship5 = field1.placeShip(shipType1, placementInfo5);
+        assert(field1.getField().isEmpty());
+        assert(ship5==null);
+
+        //try placing ship outside the field
+        field1.getField().clear();
+        Ship ship6 = field1.placeShip(shipType1, placementInfo6);
+        assert(field1.getField().isEmpty());
+        assert(ship6==null);
     }
 
    /* @Test

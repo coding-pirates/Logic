@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * <p>
  * Used for getting all possible rotations of one ship.
  *
- * @author Benjamin Kasten
+ * @author Benjamin Kasten, (Leonie Lender)
  */
 public class Rotator {
     private static final Logger logger = LogManager.getLogger();
@@ -40,15 +40,15 @@ public class Rotator {
         ArrayList<ArrayList<Point2D>> allPossibleTurns = new ArrayList<>();
         //no turn
         allPossibleTurns.add(mover.moveToZeroPoint(ships));
-        //270 degree
+        //90 degrees
         allPossibleTurns.add(turn90(ships));
-        //180 degree
+        //180 degrees
         ArrayList<Point2D> temp180;
         temp180 = turn90(ships);
         temp180 = turn90(temp180);
         allPossibleTurns.add(temp180);
 
-        //90 degree
+        //270 degrees
         ArrayList<Point2D> temp270;
         temp270 = turn90(ships);
         temp270 = turn90(temp270);
