@@ -40,7 +40,7 @@ public class Rotator {
         ArrayList<ArrayList<Point2D>> allPossibleTurns = new ArrayList<>();
         //no turn
         allPossibleTurns.add(mover.moveToZeroPoint(ships));
-        //90 degree
+        //270 degree
         allPossibleTurns.add(turn90(ships));
         //180 degree
         ArrayList<Point2D> temp180;
@@ -48,13 +48,12 @@ public class Rotator {
         temp180 = turn90(temp180);
         allPossibleTurns.add(temp180);
 
-        //270 degree
+        //90 degree
         ArrayList<Point2D> temp270;
         temp270 = turn90(ships);
         temp270 = turn90(temp270);
         temp270 = turn90(temp270);
         allPossibleTurns.add(temp270);
-
         return allPossibleTurns;
 
     }

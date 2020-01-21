@@ -86,7 +86,7 @@ public class Field {
             }
         }
         else if (placementInfo.getRotation() == Rotation.CLOCKWISE_90){
-            for (Point2D p : rotatedShipPositions.get(1)){
+            for (Point2D p : rotatedShipPositions.get(3)){
                 shipPositions.add(p);
             }
         }
@@ -96,7 +96,7 @@ public class Field {
             }
         }
         else if (placementInfo.getRotation() == Rotation.COUNTERCLOCKWISE_90){
-            for (Point2D p : rotatedShipPositions.get(3)){
+            for (Point2D p : rotatedShipPositions.get(1)){
                 shipPositions.add(p);
             }
         }

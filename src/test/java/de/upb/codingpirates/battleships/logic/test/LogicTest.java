@@ -40,28 +40,30 @@ public class LogicTest {
         Field field3 = new Field(config.getHeight(), config.getWidth(), 3);
 
         //create placementInfo
-        PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2, 5), Rotation.NONE);
-        PlacementInfo placementInfo2 = new PlacementInfo(new Point2D(2, 5), Rotation.CLOCKWISE_90);
-        PlacementInfo placementInfo3 = new PlacementInfo(new Point2D(2, 5), Rotation.CLOCKWISE_180);
-        PlacementInfo placementInfo4 = new PlacementInfo(new Point2D(2, 5), Rotation.COUNTERCLOCKWISE_90);
+        PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(10, 3), Rotation.NONE);
+        PlacementInfo placementInfo2 = new PlacementInfo(new Point2D(10, 3), Rotation.CLOCKWISE_90);
+        PlacementInfo placementInfo3 = new PlacementInfo(new Point2D(10, 3), Rotation.CLOCKWISE_180);
+        PlacementInfo placementInfo4 = new PlacementInfo(new Point2D(10, 3), Rotation.COUNTERCLOCKWISE_90);
 
         Ship ship1 = field1.placeShip(shipType1, placementInfo1);
-        assert(field1.getField().contains(2,5));
+        System.out.println(field1.getField());
+        /*assert(field1.getField().contains(2,5));
         assert(field1.getField().contains(2,6));
         assert(field1.getField().contains(3,6));
-        assert(field1.getField().contains(4,6));
+        assert(field1.getField().contains(4,6));*/
 
-        /*Ship ship2 = field2.placeShip(shipType1, placementInfo2);
-        assert(field2.getField().contains(2,5));
+        Ship ship2 = field2.placeShip(shipType1, placementInfo2);
+        System.out.println(field2.getField());
+        /*assert(field2.getField().contains(2,5));
         assert(field2.getField().contains(2,6));
         assert(field2.getField().contains(2,7));
-        assert(field2.getField().contains());
+        assert(field2.getField().contains());*/
 
-        Ship ship2 = field2.placeShip(shipType1, placementInfo3);
-        System.out.println(field2.getField().toString());*/
+        Ship ship3 = field3.placeShip(shipType1, placementInfo3);
+        System.out.println(field3.getField().toString());
     }
 
-    @Test
+   /* @Test
     public void test_shooting(){
         //create a shipType
         ArrayList<Point2D> positionsForShipType1 = new ArrayList<>();
@@ -119,6 +121,6 @@ public class LogicTest {
         assert(ship1.hit(new Point2D(3,6)));
         assert(ship1.hit(new Point2D(3,7)));
 
-    }
+    }*/
 
 }
