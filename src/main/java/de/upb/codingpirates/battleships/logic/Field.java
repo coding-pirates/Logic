@@ -128,6 +128,13 @@ public class Field {
         return null;
     }
 
+    /**
+     * checks if the absolute postitions of a ship can be accessed
+     *
+     * @param positions the absolute positions a ship is supposed to be placed on
+     * @return {@link true} if the ship fits on the field
+     *         {@link false} if the ship doesn't fit on the field
+     */
     private boolean validatePositions(ArrayList<Point2D> positions){
         for (Point2D p : positions){
             if (p.getX()<0 || p.getX()>width-1 || p.getY()<0 || p.getY()>height-1){

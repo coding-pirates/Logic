@@ -89,49 +89,29 @@ public class LogicTest {
         assert(ship6==null);
     }
 
-   /* @Test
-    public void test_shooting(){
-        //create a shipType
+    @Test
+    public void testShots(){
+        //place a ship on the field (positions: (2,5), (3,5), (3,6), (3,7))
         ArrayList<Point2D> positionsForShipType1 = new ArrayList<>();
         positionsForShipType1.add(new Point2D(0, 0));
         positionsForShipType1.add(new Point2D(1, 0));
         positionsForShipType1.add(new Point2D(1, 1));
         positionsForShipType1.add(new Point2D(1, 2));
         ShipType shipType1 = new ShipType(positionsForShipType1);
-
-        //create map of all shipTypes
         HashMap<Integer, ShipType> shipTypes = new HashMap<Integer, ShipType>();
         shipTypes.put(1, shipType1);
-
-        //create configuration
         Configuration config = new Configuration(3, 10, 15, 2, 5, 7, 10, 1, shipTypes, 1, PenaltyType.POINTLOSS);
-
-        Game game = new Game(1, "Testspiel", GameState.IN_PROGRESS, config, false);
-
         Client player1 = new Client(1, "Player1");
         Client player2 = new Client(2, "Player2");
-        Client player3 = new Client(3, "Player3");
-
-        Client spectator1 = new Client(1, "Spectator1");
-
-
         Field field1 = new Field(config.getHeight(), config.getWidth(), 1);
-        Field field2 = new Field(config.getHeight(), config.getWidth(), 2);
-        Field field3 = new Field(config.getHeight(), config.getWidth(), 3);
-
-        //create placementInfo
         PlacementInfo placementInfo1 = new PlacementInfo(new Point2D(2, 5), Rotation.NONE);
-        PlacementInfo placementInfo2 = new PlacementInfo(new Point2D(2, 5), Rotation.CLOCKWISE_90);
-        PlacementInfo placementInfo3 = new PlacementInfo(new Point2D(2, 5), Rotation.CLOCKWISE_180);
-        PlacementInfo placementInfo4 = new PlacementInfo(new Point2D(2, 5), Rotation.COUNTERCLOCKWISE_90);
-
         Ship ship1 = field1.placeShip(shipType1, placementInfo1);
 
         //create shots
         Shot shot1 = new Shot(1, new Point2D(7,8));
         Shot shot2 = new Shot(1, new Point2D(15, 46));
         Shot shot3 = new Shot(1, new Point2D(2,5));
-        Shot shot4 = new Shot(1, new Point2D(2,6));
+        Shot shot4 = new Shot(1, new Point2D(3,5));
         Shot shot5 = new Shot(1, new Point2D(3,6));
         Shot shot6 = new Shot(1, new Point2D(3,7));
 
@@ -147,6 +127,6 @@ public class LogicTest {
         assert(ship1.hit(new Point2D(3,6)));
         assert(ship1.hit(new Point2D(3,7)));
 
-    }*/
+    }
 
 }
