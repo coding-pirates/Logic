@@ -46,6 +46,10 @@ public class Field {
         this.clientId = clientId;
     }
 
+    public Table<Integer, Integer, Ship> getField() {
+        return field;
+    }
+
     /**
      * if ship exists at shot the ship gets hit and removed from {@link #field}
      *
