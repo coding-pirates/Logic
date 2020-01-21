@@ -143,4 +143,14 @@ public class Field {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "height=" + height +
+                ", width=" + width +
+                ", field=" + field +
+                ", clientId=" + clientId +
+                '}';
+    }
 }

@@ -1,5 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
+import com.google.common.base.Objects;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -72,6 +74,19 @@ public final class Game {
     }
 
     /**
+     * "Synthetic" getter acting as a delegate to {@link Configuration#getMaxPlayerCount()}.
+     *
+     * This getter is required because JavaFX's {@code PropertyValueFactory}, which is used to access the property
+     * values of {@code Game} instances for display in a {@code TableView}, is not able to handle nested properties
+     * (e.g. {@code config.maxPlayerCount}).
+     *
+     * @return The maximum amount of players supported by this {@code Game} instance according to its {@link #config}.
+     */
+    public int getMaxPlayerCount() {
+        return config.getMaxPlayerCount();
+    }
+
+    /**
      * Returns the unique ID associated with this {@code Game}.
      *
      * @return {@link #id}
@@ -131,5 +146,35 @@ public final class Game {
 
     public void setState(@Nonnull final GameState state) {
         this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return id == game.id &&
+                currentPlayerCount == game.currentPlayerCount &&
+                tournament == game.tournament &&
+                Objects.equal(name, game.name) &&
+                state == game.state &&
+                Objects.equal(config, game.config);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name, id, currentPlayerCount, state, config, tournament);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", currentPlayerCount=" + currentPlayerCount +
+                ", state=" + state +
+                ", config=" + config +
+                ", tournament=" + tournament +
+                '}';
     }
 }

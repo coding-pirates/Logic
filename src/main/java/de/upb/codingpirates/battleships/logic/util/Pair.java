@@ -1,10 +1,8 @@
 package de.upb.codingpirates.battleships.logic.util;
 
-import javax.annotation.Nullable;
+import com.google.common.base.Objects;
 
 /**
- * A Pair of two objects
- *
  * @author Paul Becker
  */
 public class Pair<T, Z> {
@@ -12,26 +10,42 @@ public class Pair<T, Z> {
     private T key;
     private Z value;
 
-    private Pair(T key, Z value) {
+    public Pair(T key, Z value) {
         this.key = key;
         this.value = value;
     }
 
-    public static <T, Z> Pair<T, Z> of(@Nullable T first,@Nullable Z second) {
+    public static <T, Z> Pair<T, Z> of(T first, Z second) {
         return new Pair<>(first, second);
     }
 
-    /**
-     * @return {@link #key}
-     */
     public T getKey() {
         return key;
     }
 
-    /**
-     * @return {@link #value}
-     */
     public Z getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equal(key, pair.key) &&
+                Objects.equal(value, pair.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(key, value);
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "key=" + key +
+                ", value=" + value +
+                '}';
     }
 }

@@ -1,11 +1,12 @@
 package de.upb.codingpirates.battleships.logic;
 
-import java.io.Serializable;
+import com.google.common.base.Objects;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 
 /**
- * Represents a client.
+ * Represents a player.
  *
  * This class implements {@link Serializable} in order to allow it to be serialized and transferred via the
  * {@link javafx.scene.input.Clipboard} or any of its subclasses using the {@code application/x-java-serialized-object}
@@ -15,47 +16,50 @@ import javax.annotation.Nonnull;
  * @author Paul Becker
  * @author Andre Blanke
  */
-public class Client implements Serializable {
+public class Client extends AbstractClient {
 
-    /**
-     * The unique ID of this {@code Client}.
-     */
-    private final int id;
-
-    /**
-     * The user name selected by this {@code Client}.
-     */
-    @Nonnull
-    private final String name;
+    private boolean dead;
+    private boolean spectator;
 
     public Client(final int id, @Nonnull final String name) {
-        this.id   = id;
-        this.name = name;
+        super(id, name);
     }
 
-    /**
-     * Return the specific Client ID
-     * @return {@link #id}
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Return the specific name of the client
-     * @return {@link #name}
-     */
     @Nonnull
-    public String getName() {
-        return name;
+    @Override
+    public ClientType getClientType() {
+        return ClientType.PLAYER;
     }
 
-    /**
-     * Return the specific name of the client
-     * @return {@link String}
-     */
+    public boolean isDead() {
+        return dead;
+    }
+
+    @Nonnull
     @Override
-    public String toString() {
-        return name;
+    public ClientType handleClientAs() {
+        return spectator ? ClientType.SPECTATOR : ClientType.PLAYER;
+    }
+
+    public void setDead(boolean dead){
+        this.dead = dead;
+    }
+
+    public void setSpectator(boolean spectator){
+        this.spectator = spectator;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return dead == client.dead &&
+                spectator == client.spectator;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(dead, spectator);
     }
 }

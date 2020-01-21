@@ -22,4 +22,5 @@ public enum Rotation {
      * ship should be turned counterclockwise with 90°
      */
     @SerializedName("3") COUNTERCLOCKWISE_90
+
 }
