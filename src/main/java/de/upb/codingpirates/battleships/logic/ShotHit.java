@@ -1,5 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
+import com.google.common.base.Objects;
+
 /**
  * Represents the action of the shot
  *
@@ -62,5 +64,29 @@ public class ShotHit {
      */
     public HitType getHitType() {
         return hitType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShotHit shotHit = (ShotHit) o;
+        return hitType == shotHit.hitType &&
+                Objects.equal(ship, shotHit.ship) &&
+                Objects.equal(shot, shotHit.shot);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(hitType, ship, shot);
+    }
+
+    @Override
+    public String toString() {
+        return "ShotHit{" +
+                "hitType=" + hitType +
+                ", ship=" + ship +
+                ", shot=" + shot +
+                '}';
     }
 }

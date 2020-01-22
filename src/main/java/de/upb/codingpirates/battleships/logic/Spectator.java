@@ -8,8 +8,16 @@ public class Spectator extends AbstractClient{
         super(id, name);
     }
 
+    @Nonnull
     @Override
     public ClientType getClientType() {
         return ClientType.SPECTATOR;
     }
+
+    @Nonnull
+    @Override
+    public ClientType handleClientAs() {
+        return ClientType.SPECTATOR;
+    }
+
 }

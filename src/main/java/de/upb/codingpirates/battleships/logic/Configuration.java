@@ -1,11 +1,11 @@
 package de.upb.codingpirates.battleships.logic;
 
-import java.util.IdentityHashMap;
-import java.util.Map;
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableMap;
 
 import javax.annotation.Nonnull;
-
-import com.google.common.collect.ImmutableMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 /**
  * Represents the configuration for a game.
@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableMap;
  * @author Paul Becker
  */
 public class Configuration {
+
 
     /**
      * max player possible in one game
@@ -31,8 +32,7 @@ public class Configuration {
     private final int width;
 
     /**
-     * Gives the number of possible shots per
-     * Round on
+     * Gives the number of possible shots per Round on
      */
     private final int shotCount;
 
@@ -212,6 +212,29 @@ public class Configuration {
     @Nonnull
     public Map<Integer, ShipType> getShips() {
         return ships;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Configuration that = (Configuration) o;
+        return maxPlayerCount == that.maxPlayerCount &&
+                height == that.height &&
+                width == that.width &&
+                shotCount == that.shotCount &&
+                hitPoints == that.hitPoints &&
+                sunkPoints == that.sunkPoints &&
+                roundTime == that.roundTime &&
+                visualizationTime == that.visualizationTime &&
+                penaltyMinusPoints == that.penaltyMinusPoints &&
+                penaltyKind == that.penaltyKind &&
+                Objects.equal(ships, that.ships);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(maxPlayerCount, height, width, shotCount, hitPoints, sunkPoints, roundTime, visualizationTime, penaltyMinusPoints, penaltyKind, ships);
     }
 
     public static final class Builder {
