@@ -1,5 +1,7 @@
 package de.upb.codingpirates.battleships.logic;
 
+import com.google.common.base.Objects;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -48,5 +50,27 @@ public class PlacementInfo {
     @Nonnull
     public Rotation getRotation() {
         return rotation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlacementInfo that = (PlacementInfo) o;
+        return Objects.equal(position, that.position) &&
+                rotation == that.rotation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(position, rotation);
+    }
+
+    @Override
+    public String toString() {
+        return "PlacementInfo{" +
+                "position=" + position +
+                ", rotation=" + rotation +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package de.upb.codingpirates.battleships.logic;
 
+import com.google.common.base.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Nonnull;
@@ -49,23 +50,25 @@ public class Shot {
         return targetField;
     }
 
-    /**
-     * Compares Client with a given new Client
-     * @param obj client to compare to
-     * @return {@link Boolean #true} if the id of the given an dold client is the same,
-     *         {@link Boolean #false} if the ids are different
-     */
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Shot) {
-            return ((Shot) obj).clientId == clientId && ((Shot) obj).targetField == targetField;
-
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shot shot = (Shot) o;
+        return clientId == shot.clientId &&
+                Objects.equal(targetField, shot.targetField);
     }
 
     @Override
-    public String toString(){
-        return "[" + this.getClientId() + ":" + this.getTargetField().toString() + "]";
+    public int hashCode() {
+        return Objects.hashCode(clientId, targetField);
+    }
+
+    @Override
+    public String toString() {
+        return "Shot{" +
+                "clientId=" + clientId +
+                ", targetField=" + targetField +
+                '}';
     }
 }
