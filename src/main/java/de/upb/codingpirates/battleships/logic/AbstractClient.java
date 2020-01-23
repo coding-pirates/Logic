@@ -69,9 +69,6 @@ public abstract class AbstractClient implements Serializable {
 
     @Override
     public String toString() {
-        return "AbstractClient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

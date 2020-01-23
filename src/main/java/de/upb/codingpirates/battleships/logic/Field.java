@@ -8,8 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Represents a field of one player
@@ -93,7 +91,7 @@ public class Field {
     public Ship placeShip(ShipType shipType, PlacementInfo placementInfo) {
         Rotator rotator = new Rotator();
         ArrayList<Point2D> shipPositions = new ArrayList<>();
-        ArrayList<ArrayList<Point2D>> rotatedShipPositions = rotator.rotateShips((ArrayList<Point2D>)shipType.getPositions());
+        ArrayList<ArrayList<Point2D>> rotatedShipPositions = rotator.rotateShips(shipType.getPositions());
         if (placementInfo.getRotation() == Rotation.NONE){
             for (Point2D p : rotatedShipPositions.get(0)){
             shipPositions.add(p);
