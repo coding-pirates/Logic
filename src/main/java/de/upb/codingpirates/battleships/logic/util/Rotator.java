@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Helper Class for rotating ships and making all their coordinates positive
@@ -35,7 +36,7 @@ public class Rotator {
      * @param ships Collection of points which represents a ship
      * @return allPossibleTurns ArrayList of arrayLists for each possible rotation
      */
-    public ArrayList<ArrayList<Point2D>> rotateShips(ArrayList<Point2D> ships) {
+    public ArrayList<ArrayList<Point2D>> rotateShips(Collection<Point2D> ships) {
         ZeroPointMover mover = new ZeroPointMover();
         ArrayList<ArrayList<Point2D>> allPossibleTurns = new ArrayList<>();
         //no turn
@@ -59,13 +60,13 @@ public class Rotator {
     }
 
     /**
-     * Turns a ship (collection of points) 90 degree around the zeropoint and calls the {@link ZeroPointMover#moveToZeroPoint(ArrayList)}
+     * Turns a ship (collection of points) 90 degree around the zeropoint and calls the {@link ZeroPointMover#moveToZeroPoint(Collection)}
      * method
      *
      * @param positions all points of a ship
      * @return a ArrayList of points, which includes the 90 degree turned and (now) positive points.
      */
-    public ArrayList<Point2D> turn90(ArrayList<Point2D> positions) {
+    public ArrayList<Point2D> turn90(Collection<Point2D> positions) {
         ArrayList<Point2D> turned = new ArrayList<>();
 
         for (Point2D p : positions) {

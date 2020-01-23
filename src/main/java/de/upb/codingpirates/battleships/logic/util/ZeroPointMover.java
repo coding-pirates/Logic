@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -21,7 +22,7 @@ public class ZeroPointMover {
      * @param tp the shot collection which should be shifted
      * @return the shifted collection
      */
-    public ArrayList<Point2D> moveToZeroPoint(ArrayList<Point2D> tp) {
+    public ArrayList<Point2D> moveToZeroPoint(Collection<Point2D> tp) {
         ArrayList<Integer> xVal = new ArrayList<>();
         ArrayList<Integer> yVal = new ArrayList<>();
         for (Point2D i : tp) {
