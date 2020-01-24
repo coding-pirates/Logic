@@ -57,24 +57,24 @@ public class LogicTest {
 
         //try placing ship rotated 90 degrees clockwise
         Ship ship2 = field2.placeShip(shipType1, placementInfo2);
-        assert(field2.getField().contains(4,5));
-        assert(field2.getField().contains(4,6));
-        assert(field2.getField().contains(3,6));
-        assert(field2.getField().contains(2,6));
+        assert(field2.getField().contains(2,5));
+        assert(field2.getField().contains(2,4));
+        assert(field2.getField().contains(3,4));
+        assert(field2.getField().contains(4,4));
 
         //try placing ship rotated 180 degrees clockwise
         Ship ship3 = field3.placeShip(shipType1, placementInfo3);
-        assert(field3.getField().contains(3,7));
-        assert(field3.getField().contains(2,7));
-        assert(field3.getField().contains(2,6));
         assert(field3.getField().contains(2,5));
+        assert(field3.getField().contains(1,5));
+        assert(field3.getField().contains(1,4));
+        assert(field3.getField().contains(1,3));
 
         //try placing ship rotated 90 degrees counterclockwise
         Ship ship4 = field4.placeShip(shipType1, placementInfo4);
-        assert(field4.getField().contains(2,6));
         assert(field4.getField().contains(2,5));
-        assert(field4.getField().contains(3,5));
-        assert(field4.getField().contains(4,5));
+        assert(field4.getField().contains(2,6));
+        assert(field4.getField().contains(1,6));
+        assert(field4.getField().contains(0,6));
 
         //try placing ship that doesn't fully fit on the field
         field1.getField().clear();
