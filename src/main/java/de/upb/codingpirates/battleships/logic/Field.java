@@ -90,9 +90,12 @@ public class Field {
      **/
     public Ship placeShip(ShipType shipType, PlacementInfo placementInfo) {
         Rotator rotator = new Rotator();
-        ArrayList<Point2D> shipPositions = new ArrayList<>();
-        ArrayList<ArrayList<Point2D>> rotatedShipPositions = rotator.rotateShips(shipType.getPositions());
-        if (placementInfo.getRotation() == Rotation.NONE){
+      //  ArrayList<Point2D> shipPositions = new ArrayList<>();
+        //ArrayList<ArrayList<Point2D>> rotatedShipPositions = rotator.rotateShips(shipType.getPositions());
+        ArrayList<Point2D> shipPositions = rotator.rotateShipsTest(shipType.getPositions(),placementInfo.getRotation().ordinal());
+
+
+       /* if (placementInfo.getRotation() == Rotation.NONE){
             for (Point2D p : rotatedShipPositions.get(0)){
             shipPositions.add(p);
             }
@@ -111,7 +114,8 @@ public class Field {
             for (Point2D p : rotatedShipPositions.get(3)){
                 shipPositions.add(p);
             }
-        }
+        } */
+
         ArrayList<Point2D> positionsOnField = new ArrayList<>();
         for (Point2D p : shipPositions){
             positionsOnField.add(new Point2D(p.getX()+placementInfo.getPosition().getX(), p.getY()+placementInfo.getPosition().getY()));
