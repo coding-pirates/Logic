@@ -22,7 +22,6 @@ public class Rotator {
     /**
      * Constructor for {@link Rotator}.
      *
-     * @param
      */
     public Rotator() {
 

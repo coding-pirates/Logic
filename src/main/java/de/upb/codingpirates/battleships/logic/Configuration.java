@@ -167,7 +167,7 @@ public class Configuration {
 
     /**
      * Return points for a sunken ship in the right scale (multiply with 4)
-     * @return {@link #sunkPoints*4}
+     * @return  #sunkPoints x 4
      */
     public int getSunkPoints() {
         return sunkPoints * 4;
