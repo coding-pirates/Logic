@@ -21,12 +21,12 @@ jobs:
           key: ${{ runner.os }}-gradle-cache${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle-cache
       - name: Cache gradle wrapper
-          uses: actions/cache@v1.1.0
-          with:
-            path: |
-              ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-wrapper${{ hashFiles('**/*.gradle') }}
-            restore-keys: ${{ runner.os }}-gradle-wrapper
+        uses: actions/cache@v1.1.0
+        with:
+          path: |
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle-wrapper
       - name: Setup Gradle
         run: ./gradlew
       - name: Build with Gradle
