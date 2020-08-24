@@ -37,7 +37,7 @@ public class ShipType {
     /**
      * Return all positions of the ship
      *
-     * @return {@link Collection<Point2D>}
+     * @return all positions
      */
     @Nonnull
     public Collection<Point2D> getPositions() {

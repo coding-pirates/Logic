@@ -86,7 +86,7 @@ public class Field {
      * @param placementInfo Information about the upper left point to place the ship and the rotation information
      *
      * @return {@link Ship} if the ship was placed successfully,
-     *         {@link null} if the ship was not placed successfully
+     *         {@code null} if the ship was not placed successfully
      **/
     public Ship placeShip(ShipType shipType, PlacementInfo placementInfo) {
         Rotator rotator = new Rotator();

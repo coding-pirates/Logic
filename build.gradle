@@ -6,6 +6,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -31,17 +32,31 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-task sourceJar(type: Jar){
+task sourceJar(type: Jar, dependsOn: classes){
     classifier 'sources'
-    from sourceSets.main.allJava
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourceJar
+    archives javadocJar
 }
 
 jar {
+
+    includeEmptyDirs = false
+    from sourceSets.main.output.classesDirs
+    from sourceSets.main.output.resourcesDir
+
     manifest {
         attributes 'Implementation-Title': 'Battleships Logic',
                 'Implementation-Version': "${project.version}"
     }
-    from ( configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } )
 }
 
 configurations {
@@ -61,8 +76,12 @@ uploadArchives {
         configuration = configurations.deployerJars
 
         logger.info('Publishing to files server')
-        repository(url: System.getProperty("MAVEN_URL")) {
-            authentication(userName: System.getProperty("MAVEN_USER"), password: System.getProperty("MAVEN_TOKEN"))
+        if (project.hasProperty("maven_url")) {
+            repository(url: project.getProperty("maven_url")) {
+                authentication(userName: project.getProperty("maven_user"), password: project.getProperty("maven_password"))
+            }
+        } else {
+            repository(url: 'file://localhost/' + project.file('../../.m2/repository').getAbsolutePath())
         }
         pom {
             groupId = project.group
@@ -70,7 +89,7 @@ uploadArchives {
             artifactId = project.artifact
         }
         pom.project {
-            name project.archivesBaseName
+            name project.artifact
             packaging 'jar'
             description 'logic component of battleships'
             url 'https://github.com/coding-pirates/logic'

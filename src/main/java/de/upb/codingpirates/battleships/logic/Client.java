@@ -8,10 +8,6 @@ import java.io.Serializable;
 /**
  * Represents a player.
  *
- * This class implements {@link Serializable} in order to allow it to be serialized and transferred via the
- * {@link javafx.scene.input.Clipboard} or any of its subclasses using the {@code application/x-java-serialized-object}
- * MIME type.
- *
  * @author Interdoc committee
  * @author Paul Becker
  * @author Andre Blanke
